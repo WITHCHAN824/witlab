@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WitLab - 위트있는 실험실</title>
+    <meta name="description" content="WitLab은 무료 웹 도구와 미니 게임을 제공하는 디지털 실험실입니다. 가짜톡 만들기, 절대색감 테스트, 코인 모의투자 등 설치 없이 즐길 수 있는 다양한 유틸리티를 경험해보세요.">
+    <meta name="keywords" content="가짜톡, 웹게임, 미니게임, 무료도구, WitLab, 코인게임, 절대색감">
+    <meta name="google-site-verification" content="여기에_구글_서치콘솔_코드를_넣으세요" />
+    
+    <title>WitLab - 무료 웹 도구 & 미니게임 연구소</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXX" crossorigin="anonymous"></script>
+
     <style>
         :root {
             --bg: #0a0a0a;
@@ -26,7 +34,7 @@
             font-family: 'Noto Sans KR', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
-            cursor: none;
+            cursor: none; /* 커스텀 커서 사용 */
         }
 
         /* Custom Cursor */
@@ -70,6 +78,8 @@
             min-height: 100vh;
             padding: 2rem;
             position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Floating Elements */
@@ -80,6 +90,7 @@
             font-size: 0.7rem;
             color: var(--blue);
             opacity: 0.4;
+            z-index: 0;
         }
 
         .floater:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
@@ -99,14 +110,17 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 4rem;
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
             font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
             color: var(--yellow);
-            position: relative;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .logo::after {
@@ -125,13 +139,14 @@
             gap: 0.5rem;
             font-family: 'Space Mono', monospace;
             font-size: 0.7rem;
-            color: #666;
+            color: #aaa;
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
-            background: var(--pink);
+            background: var(--up); /* 초록색이 없어서 아래에서 정의 필요하나 일단 pink로 대체 가능, 여기선 pink */
+            background: #0ecb81;
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
@@ -147,18 +162,18 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 70vh;
             text-align: center;
             position: relative;
+            z-index: 10;
         }
 
         .title-wrapper {
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .title {
-            font-size: clamp(4rem, 15vw, 12rem);
+            font-size: clamp(4rem, 15vw, 10rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             line-height: 0.9;
@@ -168,27 +183,27 @@
 
         .title span {
             display: inline-block;
-            animation: wiggle 0.5s ease-in-out infinite;
+            animation: wiggle 3s ease-in-out infinite;
         }
-
+        
+        /* 스팬별 딜레이 */
         .title span:nth-child(1) { animation-delay: 0s; color: var(--yellow); }
-        .title span:nth-child(2) { animation-delay: 0.05s; color: var(--white); }
-        .title span:nth-child(3) { animation-delay: 0.1s; color: var(--white); }
-        .title span:nth-child(4) { animation-delay: 0.15s; color: var(--pink); }
-        .title span:nth-child(5) { animation-delay: 0.2s; color: var(--white); }
-        .title span:nth-child(6) { animation-delay: 0.25s; color: var(--blue); }
+        .title span:nth-child(2) { animation-delay: 0.1s; color: var(--white); }
+        .title span:nth-child(3) { animation-delay: 0.2s; color: var(--white); }
+        .title span:nth-child(4) { animation-delay: 0.3s; color: var(--pink); }
+        .title span:nth-child(5) { animation-delay: 0.4s; color: var(--white); }
+        .title span:nth-child(6) { animation-delay: 0.5s; color: var(--blue); }
 
         @keyframes wiggle {
             0%, 100% { transform: translateY(0); }
-            25% { transform: translateY(-5px); }
-            75% { transform: translateY(5px); }
+            50% { transform: translateY(-10px); }
         }
 
         .title-shadow {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: clamp(4rem, 15vw, 12rem);
+            top: 5px;
+            left: 5px;
+            font-size: clamp(4rem, 15vw, 10rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             line-height: 0.9;
@@ -200,10 +215,10 @@
 
         .subtitle {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
             color: #888;
-            margin-bottom: 3rem;
-            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
         }
 
         .subtitle .highlight {
@@ -212,42 +227,24 @@
             padding: 0.2em 0.5em;
         }
 
-        /* Tagline */
+        /* Tagline (설명글) */
         .tagline {
-            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: 400;
-            color: var(--white);
-            max-width: 600px;
-            line-height: 1.6;
+            color: #ddd;
+            max-width: 700px;
+            line-height: 1.8;
             margin-bottom: 4rem;
+            word-break: keep-all;
         }
 
         .tagline em {
             font-style: normal;
             color: var(--blue);
-            position: relative;
+            font-weight: bold;
         }
 
-        .tagline em::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--blue);
-            transform: scaleX(0);
-            animation: underline 3s ease-in-out infinite;
-        }
-
-        @keyframes underline {
-            0%, 100% { transform: scaleX(0); transform-origin: left; }
-            50% { transform: scaleX(1); transform-origin: left; }
-            51% { transform-origin: right; }
-            100% { transform: scaleX(0); transform-origin: right; }
-        }
-
-        /* Experiment Cards */
+        /* Experiment Cards (아이콘 박스) */
         .experiments {
             display: flex;
             gap: 1.5rem;
@@ -257,49 +254,26 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 2rem;
-            width: 180px;
+            width: 160px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--yellow) 0%, var(--pink) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: -1;
+            border-radius: 12px;
         }
 
         .card:hover {
-            transform: translateY(-10px) rotate(-2deg);
+            transform: translateY(-10px);
             border-color: var(--yellow);
-        }
-
-        .card:hover::before {
-            opacity: 0.1;
-        }
-
-        .card:nth-child(2):hover {
-            transform: translateY(-10px) rotate(2deg);
-        }
-
-        .card:nth-child(3):hover {
-            transform: translateY(-10px) rotate(-1deg);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .card-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             display: block;
         }
@@ -310,12 +284,75 @@
             color: var(--white);
             margin-bottom: 0.5rem;
             letter-spacing: 1px;
+            font-weight: bold;
         }
 
         .card-status {
             font-size: 0.65rem;
-            color: var(--pink);
+            color: var(--yellow);
             font-family: 'Space Mono', monospace;
+        }
+
+        /* Project List (텍스트 콘텐츠 영역 - SEO 핵심) */
+        .project-list {
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+            margin: 0 auto 4rem auto;
+            background: rgba(25, 25, 25, 0.6);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .project-header {
+            color: var(--yellow);
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .project-item {
+            margin-bottom: 2.5rem;
+        }
+        .project-item:last-child { margin-bottom: 0; }
+
+        .project-title {
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-desc {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: var(--blue);
+            font-size: 0.9rem;
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            border: 1px solid var(--blue);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .project-link:hover {
+            background: var(--blue);
+            color: #000;
+            font-weight: bold;
         }
 
         /* CTA Section */
@@ -326,62 +363,39 @@
 
         .cta-text {
             font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #666;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .btn {
+        .next-loading {
             display: inline-block;
-            padding: 1rem 3rem;
-            background: transparent;
-            border: 2px solid var(--yellow);
-            color: var(--yellow);
+            padding: 1rem 2rem;
+            border: 1px dashed #444;
+            color: #666;
             font-family: 'Space Mono', monospace;
             font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--yellow);
-            transition: left 0.3s;
-            z-index: -1;
-        }
-
-        .btn:hover {
-            color: var(--bg);
-        }
-
-        .btn:hover::before {
-            left: 0;
+            border-radius: 30px;
         }
 
         /* Footer */
         .footer {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 1rem;
             align-items: center;
+            text-align: center;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #444;
+            padding-bottom: 4rem; /* 마퀴 때문에 여백 줌 */
         }
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .footer-links a {
@@ -391,14 +405,10 @@
         }
 
         .footer-links a:hover {
-            color: var(--blue);
+            color: var(--white);
         }
 
         /* Glitch Effect */
-        .glitch {
-            position: relative;
-        }
-
         .glitch:hover {
             animation: glitch 0.3s infinite;
         }
@@ -431,8 +441,8 @@
 
         .marquee span {
             font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--bg);
+            font-size: 0.8rem;
+            color: #000;
             white-space: nowrap;
             padding: 0 3rem;
             font-weight: 700;
@@ -443,35 +453,18 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Easter Egg */
-        .secret {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 10rem;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 200;
-            transition: opacity 0.3s;
-        }
-
-        body.konami .secret {
-            opacity: 1;
-            animation: spin 1s ease-out;
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(720deg); }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .experiments { gap: 1rem; }
-            .card { width: 140px; padding: 1.5rem; }
-            .footer { flex-direction: column; gap: 1rem; text-align: center; }
+            .card { width: 100%; max-width: 100%; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; text-align: left; }
+            .card-icon { margin-bottom: 0; font-size: 1.5rem; order: 1; }
+            .card-title { margin-bottom: 0; font-size: 1rem; order: 2; flex: 1; padding-left: 15px; }
+            .card-status { order: 3; }
+            
+            .project-list { padding: 1.5rem; }
+            .title { font-size: 3.5rem; }
+            .tagline { font-size: 0.9rem; }
             .floater { display: none; }
         }
     </style>
@@ -480,26 +473,22 @@
     <div class="noise"></div>
     <div class="cursor"></div>
     <div class="cursor-dot"></div>
-    <div class="secret">🎉</div>
 
     <div class="container">
-        <!-- Floating Code Snippets -->
         <div class="floater">const wit = true;</div>
         <div class="floater">if(fun) return magic;</div>
-        <div class="floater">// TODO: 세상정복</div>
-        <div class="floater">brain.exe</div>
-        <div class="floater">error: 재미 과다</div>
+        <div class="floater">return "joy";</div>
+        <div class="floater">console.log("hello");</div>
+        <div class="floater">WitLab.init();</div>
 
-        <!-- Header -->
         <header class="header">
-            <div class="logo">WITLAB</div>
+            <div class="logo" onclick="location.href='/'">WITLAB</div>
             <div class="status">
                 <div class="status-dot"></div>
-                <span>실험중</span>
+                <span>LIVE SERVER</span>
             </div>
         </header>
 
-        <!-- Hero -->
         <main class="hero">
             <div class="title-wrapper">
                 <h1 class="title glitch">
@@ -509,94 +498,93 @@
             </div>
 
             <p class="subtitle">
-                &nbsp;
+                <span class="highlight">WEB TOOLS</span> & <span class="highlight">MINI GAMES</span>
             </p>
 
             <p class="tagline">
-                게임, AI, 그리고 <em>말도 안 되는 것들</em>을<br>
-                진지하게 만드는 곳
+                WitLab은 개발자의 엉뚱한 상상을 현실로 만드는 <em>디지털 실험실</em>입니다.<br>
+                설치 없이 웹에서 바로 즐길 수 있는 무료 유틸리티와 미니 게임을 제공합니다.<br>
+                지금 바로 아래의 실험실 도구들을 <strong>무료로 체험</strong>해 보세요.
             </p>
 
-            <!-- Experiment Cards -->
             <div class="experiments">
-                <div class="card">
-                    <span class="card-icon">🎮</span>
-                    <div class="card-title">GAMES</div>
-                    <div class="card-status">[ 개발중 ]</div>
+                <div class="card" onclick="location.href='/bitwit/index.html'">
+                    <span class="card-icon">💰</span>
+                    <div class="card-title">COIN GAME</div>
+                    <div class="card-status">[ LIVE ]</div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">🤖</span>
-                    <div class="card-title">AI</div>
-                    <div class="card-status">[ 학습중 ]</div>
+                <div class="card" onclick="location.href='/faketalk/index.html'">
+                    <span class="card-icon">💬</span>
+                    <div class="card-title">FAKE TALK</div>
+                    <div class="card-status">[ LIVE ]</div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">🔮</span>
-                    <div class="card-title">???</div>
-                    <div class="card-status">[ 기밀 ]</div>
+                <div class="card" onclick="location.href='/colorsensetest/index.html'">
+                    <span class="card-icon">🎨</span>
+                    <div class="card-title">COLOR TEST</div>
+                    <div class="card-status">[ LIVE ]</div>
                 </div>
             </div>
 
-            <!-- Tool Link -->
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <a href="/faketalk/index.html" style="font-size: 24px; color: var(--blue); font-family: 'Space Mono', monospace; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--blue); transition: all 0.3s;">
-                    [클릭] 가짜톡 만들기 도구 바로가기
-                </a>
+            <div class="project-list">
+                <div class="project-header">// FEATURED PROJECTS</div>
+                
+                <div class="project-item">
+                    <div class="project-title">⚡ 가짜톡 만들기 (Fake Talk Generator)</div>
+                    <p class="project-desc">
+                        카카오톡 대화 내용을 진짜처럼 패러디할 수 있는 무료 웹 도구입니다. 프로필 사진, 이름, 대화 내용을 자유롭게 설정하여 재미있는 짤방을 만들어보세요. 별도의 앱 설치 없이 브라우저에서 즉시 이미지를 생성하고 다운로드할 수 있습니다.
+                    </p>
+                    <a href="/faketalk/index.html" class="project-link">도구 실행하기</a>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-title">⚡ 절대색감 테스트 (Color Sense Test)</div>
+                    <p class="project-desc">
+                        당신의 시각 능력은 상위 몇 %일까요? 미세하게 다른 색깔 타일을 찾아내는 반응형 웹 게임입니다. 레벨이 올라갈수록 색상 차이가 줄어들어 고도의 집중력을 요합니다. 친구들과 점수를 공유하고 경쟁해 보세요.
+                    </p>
+                    <a href="/colorsensetest/index.html" class="project-link">게임 시작하기</a>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-title">⚡ 비트위트 챌린지 (Coin Simulation)</div>
+                    <p class="project-desc">
+                        내 돈 한 푼 쓰지 않고 즐기는 가상 코인 선물 거래 게임입니다. 100배 레버리지와 실시간 차트 변동 시스템을 통해 트레이딩의 스릴을 안전하게 즐길 수 있습니다. 파산의 위험을 피해 목표 금액 10억을 달성해 보세요.
+                    </p>
+                    <a href="/bitwit/index.html" class="project-link">모의투자 하기</a>
+                </div>
             </div>
 
-             <!-- Tool Link -->
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <a href="/colorsensetest/index.html" style="font-size: 24px; color: var(--blue); font-family: 'Space Mono', monospace; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--blue); transition: all 0.3s;">
-                    [클릭] 절대색감 테스트
-                </a>
-            </div>
-
-               <!-- Tool Link -->
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <a href="/bitwit/index.html" style="font-size: 24px; color: var(--blue); font-family: 'Space Mono', monospace; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--blue); transition: all 0.3s;">
-                    [클릭] 코인 선물 모의투자 게임
-                </a>
-            </div>
-
-            <!-- CTA -->
             <div class="cta">
-                <p class="cta-text">// 뭔가 재밌는 게 곧 나옵니다</p>
-                <a href="#" class="btn">COMING SOON</a>
+                <p class="cta-text">매주 새로운 도구가 업데이트됩니다.</p>
+                <div class="next-loading">NEXT PROJECT LOADING...</div>
             </div>
         </main>
 
-        <!-- Footer -->
         <footer class="footer">
-            <div>© 2025 WitLab. 진지하게 안 진지함.</div>
+            <div>© 2026 WitLab. All rights reserved.</div>
             <div class="footer-links">
-               <a href="privacy.html">개인정보처리방침</a>
-   
-                <a href="#">Twitter</a>
-                <a href="#">Contact</a>
+                <a href="/privacy.html">개인정보처리방침</a>
+                <a href="mailto:contact@witlab.kr">Contact</a>
             </div>
-		 <
         </footer>
-
-
     </div>
 
-    <!-- Marquee -->
     <div class="marquee-container">
         <div class="marquee">
-            <span>🧪 EXPERIMENT IN PROGRESS</span>
+            <span>🧪 WITLAB EXPERIMENT</span>
             <span>⚡ POWERED BY CURIOSITY</span>
-            <span>🎯 SHIPPING WEIRD STUFF</span>
-            <span>💡 IDEAS > PERFECTION</span>
-            <span>🚀 BREAKING THINGS DAILY</span>
-            <span>🧪 EXPERIMENT IN PROGRESS</span>
+            <span>🎯 FREE WEB TOOLS</span>
+            <span>💡 NO INSTALLATION REQUIRED</span>
+            <span>🚀 JUST PLAY & ENJOY</span>
+            <span>🧪 WITLAB EXPERIMENT</span>
             <span>⚡ POWERED BY CURIOSITY</span>
-            <span>🎯 SHIPPING WEIRD STUFF</span>
-            <span>💡 IDEAS > PERFECTION</span>
-            <span>🚀 BREAKING THINGS DAILY</span>
+            <span>🎯 FREE WEB TOOLS</span>
+            <span>💡 NO INSTALLATION REQUIRED</span>
+            <span>🚀 JUST PLAY & ENJOY</span>
         </div>
     </div>
 
     <script>
-        // Custom Cursor
+        // Custom Cursor Logic
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
 
@@ -607,47 +595,21 @@
             cursorDot.style.top = e.clientY - 3 + 'px';
         });
 
-        // Cursor hover effect
-        document.querySelectorAll('.card, .btn, a').forEach(el => {
+        // Hover Effect
+        document.querySelectorAll('.card, .project-link, .logo, a').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
+                cursor.style.transform = 'scale(2.5)';
                 cursor.style.borderColor = '#ff2d6a';
+                cursor.style.mixBlendMode = 'normal';
             });
             el.addEventListener('mouseleave', () => {
                 cursor.style.transform = 'scale(1)';
                 cursor.style.borderColor = '#f6ff00';
+                cursor.style.mixBlendMode = 'difference';
             });
         });
 
-        // Konami Code Easter Egg
-        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-        let konamiIndex = 0;
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === konamiCode[konamiIndex]) {
-                konamiIndex++;
-                if (konamiIndex === konamiCode.length) {
-                    document.body.classList.add('konami');
-                    setTimeout(() => {
-                        document.body.classList.remove('konami');
-                    }, 2000);
-                    konamiIndex = 0;
-                }
-            } else {
-                konamiIndex = 0;
-            }
-        });
-
-        // Card click effect
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function() {
-                this.style.animation = 'none';
-                this.offsetHeight; // Trigger reflow
-                this.style.animation = 'glitch 0.3s';
-            });
-        });
-
-        // Random title color change
+        // Random Glitch Effect on Title
         const titleSpans = document.querySelectorAll('.title span');
         setInterval(() => {
             const randomIndex = Math.floor(Math.random() * titleSpans.length);

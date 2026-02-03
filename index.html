@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WitLab은 무료 웹 도구와 미니 게임을 제공하는 디지털 실험실입니다. 가짜톡 만들기, 절대색감 테스트, 코인 모의투자 등 설치 없이 즐길 수 있는 다양한 유틸리티를 경험해보세요.">
-    <meta name="keywords" content="가짜톡, 웹게임, 미니게임, 무료도구, WitLab, 코인게임, 절대색감">
-    <meta name="google-site-verification" content="여기에_구글_서치콘솔_코드를_넣으세요" />
-    
-    <title>WitLab - 무료 웹 도구 & 미니게임 연구소</title>
-    
+    <title>WitLab - 위트있는 실험실</title>
+    <meta name="description" content="WitLab은 가짜톡 만들기, 절대색감 테스트, 코인 모의투자 등 설치 없이 즐기는 무료 웹 도구를 제공하는 디지털 실험실입니다.">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXX" crossorigin="anonymous"></script>
@@ -22,11 +18,7 @@
             --white: #fefefe;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: var(--bg);
@@ -34,42 +26,28 @@
             font-family: 'Noto Sans KR', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
-            cursor: none; /* 커스텀 커서 사용 */
+            cursor: none;
         }
 
         /* Custom Cursor */
         .cursor {
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 2px solid var(--yellow);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: difference;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease; mix-blend-mode: difference;
         }
-
         .cursor-dot {
-            width: 6px;
-            height: 6px;
+            width: 6px; height: 6px;
             background: var(--pink);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; pointer-events: none; z-index: 9999;
         }
 
         /* Noise Overlay */
         .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.03;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
@@ -90,9 +68,7 @@
             font-size: 0.7rem;
             color: var(--blue);
             opacity: 0.4;
-            z-index: 0;
         }
-
         .floater:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
         .floater:nth-child(2) { top: 20%; right: 8%; animation-delay: 1s; }
         .floater:nth-child(3) { top: 60%; left: 3%; animation-delay: 2s; }
@@ -106,87 +82,36 @@
 
         /* Header */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4rem;
-            position: relative;
-            z-index: 10;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem;
         }
-
         .logo {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            color: var(--yellow);
-            font-weight: bold;
-            cursor: pointer;
+            font-family: 'Space Mono', monospace; font-size: 0.9rem; letter-spacing: 2px;
+            color: var(--yellow); position: relative; cursor: pointer;
         }
-
-        .logo::after {
-            content: '_';
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        .logo::after { content: '_'; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            color: #aaa;
+            display: flex; align-items: center; gap: 0.5rem;
+            font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #666;
         }
-
         .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--up); /* 초록색이 없어서 아래에서 정의 필요하나 일단 pink로 대체 가능, 여기선 pink */
-            background: #0ecb81;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+            width: 8px; height: 8px; background: #0ecb81; /* 초록색으로 변경 */
+            border-radius: 50%; animation: pulse 2s infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } }
 
         /* Hero Section */
         .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            z-index: 10;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; position: relative;
         }
-
-        .title-wrapper {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-
+        .title-wrapper { position: relative; margin-bottom: 2rem; }
         .title {
-            font-size: clamp(4rem, 15vw, 10rem);
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            line-height: 0.9;
-            position: relative;
-            z-index: 2;
+            font-size: clamp(4rem, 15vw, 12rem); font-weight: 900; letter-spacing: -0.05em; line-height: 0.9;
+            position: relative; z-index: 2;
         }
-
-        .title span {
-            display: inline-block;
-            animation: wiggle 3s ease-in-out infinite;
-        }
-        
-        /* 스팬별 딜레이 */
+        .title span { display: inline-block; animation: wiggle 3s ease-in-out infinite; }
         .title span:nth-child(1) { animation-delay: 0s; color: var(--yellow); }
         .title span:nth-child(2) { animation-delay: 0.1s; color: var(--white); }
         .title span:nth-child(3) { animation-delay: 0.2s; color: var(--white); }
@@ -194,277 +119,102 @@
         .title span:nth-child(5) { animation-delay: 0.4s; color: var(--white); }
         .title span:nth-child(6) { animation-delay: 0.5s; color: var(--blue); }
 
-        @keyframes wiggle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes wiggle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         .title-shadow {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            font-size: clamp(4rem, 15vw, 10rem);
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            line-height: 0.9;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--pink);
-            z-index: 1;
-            opacity: 0.5;
+            position: absolute; top: 8px; left: 8px;
+            font-size: clamp(4rem, 15vw, 12rem); font-weight: 900; letter-spacing: -0.05em; line-height: 0.9;
+            color: transparent; -webkit-text-stroke: 1px var(--pink);
+            z-index: 1; opacity: 0.5;
         }
 
         .subtitle {
-            font-family: 'Space Mono', monospace;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            color: #888;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
+            font-family: 'Space Mono', monospace; font-size: clamp(0.8rem, 2vw, 1.2rem);
+            color: #888; margin-bottom: 3rem; letter-spacing: 3px;
         }
-
         .subtitle .highlight {
-            color: var(--yellow);
-            background: rgba(246, 255, 0, 0.1);
-            padding: 0.2em 0.5em;
+            color: var(--yellow); background: rgba(246, 255, 0, 0.1); padding: 0.2em 0.5em;
         }
 
-        /* Tagline (설명글) */
         .tagline {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            font-weight: 400;
-            color: #ddd;
-            max-width: 700px;
-            line-height: 1.8;
-            margin-bottom: 4rem;
-            word-break: keep-all;
+            font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 400; color: var(--white);
+            max-width: 700px; line-height: 1.6; margin-bottom: 4rem;
         }
-
         .tagline em {
-            font-style: normal;
-            color: var(--blue);
-            font-weight: bold;
+            font-style: normal; color: var(--blue); position: relative;
         }
 
-        /* Experiment Cards (아이콘 박스) */
+        /* Experiment Cards */
         .experiments {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 4rem;
+            display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem;
         }
-
         .card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            width: 160px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 2rem; width: 200px; /* 크기 약간 조정 */
+            text-align: center; position: relative; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            border-radius: 12px;
         }
-
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotate(-2deg);
             border-color: var(--yellow);
-            background: rgba(255, 255, 255, 0.05);
         }
-
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
+        .card-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
         .card-title {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--white);
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-            font-weight: bold;
+            font-family: 'Space Mono', monospace; font-size: 0.9rem;
+            color: var(--white); margin-bottom: 0.5rem; letter-spacing: 1px; font-weight: bold;
         }
-
         .card-status {
-            font-size: 0.65rem;
-            color: var(--yellow);
-            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem; color: var(--yellow); font-family: 'Space Mono', monospace;
         }
 
-        /* Project List (텍스트 콘텐츠 영역 - SEO 핵심) */
-        .project-list {
-            width: 100%;
-            max-width: 800px;
+        /* ★ 애드센스 승인용 설명 섹션 (디자인 유지) ★ */
+        .terminal-box {
             text-align: left;
-            margin: 0 auto 4rem auto;
-            background: rgba(25, 25, 25, 0.6);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            font-family: 'Space Mono', monospace; /* 디자인 통일 */
         }
-
-        .project-header {
-            color: var(--yellow);
-            font-family: 'Space Mono', monospace;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
-        }
-
-        .project-item {
-            margin-bottom: 2.5rem;
-        }
-        .project-item:last-child { margin-bottom: 0; }
-
-        .project-title {
-            color: var(--white);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .project-desc {
-            color: #b0b0b0;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
-        .project-link {
-            display: inline-block;
-            color: var(--blue);
-            font-size: 0.9rem;
-            text-decoration: none;
-            font-family: 'Space Mono', monospace;
-            border: 1px solid var(--blue);
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .project-link:hover {
-            background: var(--blue);
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* CTA Section */
-        .cta {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .cta-text {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .next-loading {
-            display: inline-block;
-            padding: 1rem 2rem;
-            border: 1px dashed #444;
-            color: #666;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
-            border-radius: 30px;
-        }
+        .term-header { color: var(--pink); margin-bottom: 1rem; font-size: 0.8rem; }
+        .term-item { margin-bottom: 1.5rem; }
+        .term-title { color: var(--blue); font-weight: bold; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .term-desc { color: #888; font-size: 0.8rem; line-height: 1.6; font-family: 'Noto Sans KR', sans-serif; }
 
         /* Footer */
         .footer {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            color: #444;
-            padding-bottom: 4rem; /* 마퀴 때문에 여백 줌 */
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #444; padding-bottom: 3rem;
         }
-
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .footer-links a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--white);
-        }
+        .footer-links a { color: #666; text-decoration: none; margin-left: 20px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--blue); }
 
         /* Glitch Effect */
-        .glitch:hover {
-            animation: glitch 0.3s infinite;
-        }
-
+        .glitch:hover { animation: glitch 0.3s infinite; }
         @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+            0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
         }
 
         /* Marquee */
         .marquee-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--yellow);
-            padding: 0.5rem 0;
-            overflow: hidden;
-            z-index: 50;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--yellow); padding: 0.5rem 0; overflow: hidden; z-index: 50;
         }
-
-        .marquee {
-            display: flex;
-            animation: marquee 20s linear infinite;
-        }
-
+        .marquee { display: flex; animation: marquee 20s linear infinite; }
         .marquee span {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: #000;
-            white-space: nowrap;
-            padding: 0 3rem;
-            font-weight: 700;
+            font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--bg);
+            white-space: nowrap; padding: 0 3rem; font-weight: 700;
         }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .experiments { gap: 1rem; }
-            .card { width: 100%; max-width: 100%; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; text-align: left; }
-            .card-icon { margin-bottom: 0; font-size: 1.5rem; order: 1; }
-            .card-title { margin-bottom: 0; font-size: 1rem; order: 2; flex: 1; padding-left: 15px; }
-            .card-status { order: 3; }
-            
-            .project-list { padding: 1.5rem; }
-            .title { font-size: 3.5rem; }
-            .tagline { font-size: 0.9rem; }
+            .card { width: 100%; }
             .floater { display: none; }
         }
     </style>
@@ -477,15 +227,15 @@
     <div class="container">
         <div class="floater">const wit = true;</div>
         <div class="floater">if(fun) return magic;</div>
-        <div class="floater">return "joy";</div>
-        <div class="floater">console.log("hello");</div>
+        <div class="floater">// TODO: 세상정복</div>
+        <div class="floater">brain.exe</div>
         <div class="floater">WitLab.init();</div>
 
         <header class="header">
             <div class="logo" onclick="location.href='/'">WITLAB</div>
             <div class="status">
                 <div class="status-dot"></div>
-                <span>LIVE SERVER</span>
+                <span>ONLINE</span>
             </div>
         </header>
 
@@ -498,13 +248,12 @@
             </div>
 
             <p class="subtitle">
-                <span class="highlight">WEB TOOLS</span> & <span class="highlight">MINI GAMES</span>
+                <span class="highlight">WEB TOOLS</span> & <span class="highlight">GAMES</span>
             </p>
 
             <p class="tagline">
-                WitLab은 개발자의 엉뚱한 상상을 현실로 만드는 <em>디지털 실험실</em>입니다.<br>
-                설치 없이 웹에서 바로 즐길 수 있는 무료 유틸리티와 미니 게임을 제공합니다.<br>
-                지금 바로 아래의 실험실 도구들을 <strong>무료로 체험</strong>해 보세요.
+                게임, AI, 그리고 <em>말도 안 되는 것들</em>을<br>
+                진지하게 만드는 디지털 실험실
             </p>
 
             <div class="experiments">
@@ -525,44 +274,34 @@
                 </div>
             </div>
 
-            <div class="project-list">
-                <div class="project-header">// FEATURED PROJECTS</div>
+            <div class="terminal-box">
+                <div class="term-header">> CAT PROJECTS.LOG</div>
                 
-                <div class="project-item">
-                    <div class="project-title">⚡ 가짜톡 만들기 (Fake Talk Generator)</div>
-                    <p class="project-desc">
-                        카카오톡 대화 내용을 진짜처럼 패러디할 수 있는 무료 웹 도구입니다. 프로필 사진, 이름, 대화 내용을 자유롭게 설정하여 재미있는 짤방을 만들어보세요. 별도의 앱 설치 없이 브라우저에서 즉시 이미지를 생성하고 다운로드할 수 있습니다.
-                    </p>
-                    <a href="/faketalk/index.html" class="project-link">도구 실행하기</a>
+                <div class="term-item">
+                    <div class="term-title">01_FAKETALK.EXE</div>
+                    <div class="term-desc">카카오톡 대화 내용을 패러디하여 재미있는 짤방을 생성하는 도구입니다. 프로필과 대화 내용을 커스터마이징하여 나만의 밈(Meme)을 만들어보세요.</div>
                 </div>
-
-                <div class="project-item">
-                    <div class="project-title">⚡ 절대색감 테스트 (Color Sense Test)</div>
-                    <p class="project-desc">
-                        당신의 시각 능력은 상위 몇 %일까요? 미세하게 다른 색깔 타일을 찾아내는 반응형 웹 게임입니다. 레벨이 올라갈수록 색상 차이가 줄어들어 고도의 집중력을 요합니다. 친구들과 점수를 공유하고 경쟁해 보세요.
-                    </p>
-                    <a href="/colorsensetest/index.html" class="project-link">게임 시작하기</a>
+                
+                <div class="term-item">
+                    <div class="term-title">02_COLOR_SENSE.JS</div>
+                    <div class="term-desc">미세한 색상 차이를 찾아내는 반응형 웹 게임입니다. 레벨이 오를수록 정교해지는 타일 속에서 정답을 찾아 당신의 시각 능력을 테스트하세요.</div>
                 </div>
-
-                <div class="project-item">
-                    <div class="project-title">⚡ 비트위트 챌린지 (Coin Simulation)</div>
-                    <p class="project-desc">
-                        내 돈 한 푼 쓰지 않고 즐기는 가상 코인 선물 거래 게임입니다. 100배 레버리지와 실시간 차트 변동 시스템을 통해 트레이딩의 스릴을 안전하게 즐길 수 있습니다. 파산의 위험을 피해 목표 금액 10억을 달성해 보세요.
-                    </p>
-                    <a href="/bitwit/index.html" class="project-link">모의투자 하기</a>
+                
+                <div class="term-item">
+                    <div class="term-title">03_BITWIT_SIM.PY</div>
+                    <div class="term-desc">100배 레버리지와 실시간 차트 변동을 시뮬레이션한 가상 코인 모의투자 게임입니다. 리스크 없이 하이 리턴 트레이딩의 스릴을 경험할 수 있습니다.</div>
                 </div>
             </div>
-
-            <div class="cta">
-                <p class="cta-text">매주 새로운 도구가 업데이트됩니다.</p>
-                <div class="next-loading">NEXT PROJECT LOADING...</div>
+            
+            <div style="margin-bottom: 4rem; color: #444; font-family: 'Space Mono'; font-size: 0.8rem;">
+                // NEXT UPDATE LOADING...
             </div>
         </main>
 
         <footer class="footer">
-            <div>© 2026 WitLab. All rights reserved.</div>
+            <div>© 2026 WitLab. 진지하게 안 진지함.</div>
             <div class="footer-links">
-                <a href="/privacy.html">개인정보처리방침</a>
+                <a href="/privacy.html">Privacy</a>
                 <a href="mailto:contact@witlab.kr">Contact</a>
             </div>
         </footer>
@@ -570,21 +309,20 @@
 
     <div class="marquee-container">
         <div class="marquee">
-            <span>🧪 WITLAB EXPERIMENT</span>
+            <span>🧪 EXPERIMENT IN PROGRESS</span>
             <span>⚡ POWERED BY CURIOSITY</span>
-            <span>🎯 FREE WEB TOOLS</span>
-            <span>💡 NO INSTALLATION REQUIRED</span>
-            <span>🚀 JUST PLAY & ENJOY</span>
-            <span>🧪 WITLAB EXPERIMENT</span>
+            <span>🎯 SHIPPING WEIRD STUFF</span>
+            <span>💡 IDEAS > PERFECTION</span>
+            <span>🚀 BREAKING THINGS DAILY</span>
+            <span>🧪 EXPERIMENT IN PROGRESS</span>
             <span>⚡ POWERED BY CURIOSITY</span>
-            <span>🎯 FREE WEB TOOLS</span>
-            <span>💡 NO INSTALLATION REQUIRED</span>
-            <span>🚀 JUST PLAY & ENJOY</span>
+            <span>🎯 SHIPPING WEIRD STUFF</span>
+            <span>💡 IDEAS > PERFECTION</span>
+            <span>🚀 BREAKING THINGS DAILY</span>
         </div>
     </div>
 
     <script>
-        // Custom Cursor Logic
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
 
@@ -596,20 +334,18 @@
         });
 
         // Hover Effect
-        document.querySelectorAll('.card, .project-link, .logo, a').forEach(el => {
+        document.querySelectorAll('.card, a, .logo').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2.5)';
+                cursor.style.transform = 'scale(2)';
                 cursor.style.borderColor = '#ff2d6a';
-                cursor.style.mixBlendMode = 'normal';
             });
             el.addEventListener('mouseleave', () => {
                 cursor.style.transform = 'scale(1)';
                 cursor.style.borderColor = '#f6ff00';
-                cursor.style.mixBlendMode = 'difference';
             });
         });
 
-        // Random Glitch Effect on Title
+        // Glitch on Title
         const titleSpans = document.querySelectorAll('.title span');
         setInterval(() => {
             const randomIndex = Math.floor(Math.random() * titleSpans.length);

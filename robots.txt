@@ -1,0 +1,11 @@
+# WitLab robots.txt
+# https://witlab.kr
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://witlab.kr/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="비트위트 챌린지 완벽 공략 - 코인 레버리지 모의투자 게임 초보자 가이드. RSI, MACD 지표 읽는 법부터 10억 달성 전략까지.">
+    <meta name="keywords" content="비트위트, 코인모의투자, 레버리지게임, 가상화폐시뮬레이터, 트레이딩연습, RSI, MACD, 기술적분석">
+    <title>비트위트 챌린지 완벽 공략 - 코인 모의투자 게임 가이드 | WitLab</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --bg: #0a0a0a; --yellow: #f6ff00; --pink: #ff2d6a; --blue: #00f0ff; --white: #fefefe; --green: #00ff88; --red: #ff3366; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--white); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; line-height: 1.9; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-family: 'Space Mono', monospace; font-size: 1.2rem; letter-spacing: 2px; color: var(--yellow); font-weight: bold; text-decoration: none; }
+        .logo::after { content: '_'; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { color: #888; text-decoration: none; font-size: 0.9rem; }
+        .article-category { display: inline-block; background: rgba(0, 255, 136, 0.2); color: var(--green); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .article-title { font-size: clamp(1.8rem, 6vw, 2.8rem); font-weight: 900; margin-bottom: 1rem; line-height: 1.3; }
+        .article-meta { display: flex; gap: 1.5rem; color: #666; font-size: 0.9rem; margin-bottom: 3rem; }
+        .article-content { font-size: 1.05rem; color: #ccc; }
+        .article-content h2 { font-size: 1.6rem; font-weight: 700; color: var(--yellow); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(246, 255, 0, 0.3); }
+        .article-content h3 { font-size: 1.3rem; font-weight: 700; color: var(--white); margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.2rem; }
+        .article-content ul, .article-content ol { margin: 1rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .indicator-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .indicator-name { font-size: 1.2rem; font-weight: 700; color: var(--blue); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .signal-box { display: flex; gap: 1rem; margin-top: 1rem; }
+        .signal { flex: 1; padding: 1rem; border-radius: 8px; text-align: center; }
+        .signal.buy { background: rgba(0, 255, 136, 0.1); border: 1px solid var(--green); }
+        .signal.sell { background: rgba(255, 51, 102, 0.1); border: 1px solid var(--red); }
+        .signal-title { font-weight: 700; margin-bottom: 0.3rem; }
+        .signal.buy .signal-title { color: var(--green); }
+        .signal.sell .signal-title { color: var(--red); }
+        .strategy-card { background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .strategy-card h4 { color: #a855f7; margin-bottom: 0.5rem; }
+        .warning-box { background: rgba(255, 51, 102, 0.1); border-left: 4px solid var(--red); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+        .warning-box h4 { color: var(--red); margin-bottom: 0.5rem; }
+        .tip-box { background: rgba(0, 255, 136, 0.1); border-left: 4px solid var(--green); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+        .tip-box h4 { color: var(--green); margin-bottom: 0.5rem; }
+        .leverage-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .leverage-table th, .leverage-table td { padding: 1rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .leverage-table th { color: var(--yellow); font-weight: 700; }
+        .leverage-table tr:hover { background: rgba(255,255,255,0.03); }
+        .cta-box { background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 240, 255, 0.2)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; text-align: center; margin: 2rem 0; }
+        .cta-box h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .cta-button { display: inline-block; background: var(--green); color: var(--bg); padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+        .related-articles { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .related-articles h3 { color: var(--yellow); margin-bottom: 1rem; }
+        .related-list { display: grid; gap: 1rem; }
+        .related-item { display: flex; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px; text-decoration: none; color: inherit; }
+        .related-icon { font-size: 2rem; }
+        .related-title { font-weight: 600; color: var(--white); }
+        .related-desc { font-size: 0.85rem; color: #888; }
+        .footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #444; font-size: 0.8rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .footer-links a { color: #666; text-decoration: none; }
+        @media (max-width: 600px) { .container { padding: 1rem; } .article-meta { flex-direction: column; gap: 0.5rem; } .signal-box { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="/" class="logo">WITLAB</a>
+            <nav class="nav-links">
+                <a href="/">홈</a>
+                <a href="/about.html">소개</a>
+                <a href="/contact.html">문의</a>
+            </nav>
+        </header>
+
+        <article>
+            <header>
+                <span class="article-category">💰 공략</span>
+                <h1 class="article-title">비트위트 챌린지 완벽 공략</h1>
+                <div class="article-meta">
+                    <span>📅 2024년 12월 1일</span>
+                    <span>⏱️ 읽는 시간: 10분</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>비트위트 챌린지는 실제 돈을 사용하지 않고 가상화폐 레버리지 거래를 체험할 수 있는 시뮬레이션 게임입니다. 시작 자금 $10,000로 목표 금액 $1,000,000(10억 원)을 달성하는 것이 목표입니다. 이 가이드에서는 게임의 기본 메커니즘부터 승리 전략까지 상세히 설명합니다.</p>
+
+                <h2>게임 기본 개념</h2>
+
+                <h3>레버리지란?</h3>
+                <p>레버리지(Leverage)는 적은 자본으로 큰 금액을 거래할 수 있게 해주는 시스템입니다. 예를 들어 10배 레버리지로 $1,000를 투자하면, 실제로는 $10,000어치의 포지션을 갖게 됩니다.</p>
+
+                <table class="leverage-table">
+                    <tr><th>레버리지</th><th>투자금</th><th>실제 포지션</th><th>1% 상승 시 수익</th><th>청산 기준</th></tr>
+                    <tr><td>5x</td><td>$1,000</td><td>$5,000</td><td>+5% ($50)</td><td>-20%</td></tr>
+                    <tr><td>10x</td><td>$1,000</td><td>$10,000</td><td>+10% ($100)</td><td>-10%</td></tr>
+                    <tr><td>25x</td><td>$1,000</td><td>$25,000</td><td>+25% ($250)</td><td>-4%</td></tr>
+                    <tr><td>50x</td><td>$1,000</td><td>$50,000</td><td>+50% ($500)</td><td>-2%</td></tr>
+                </table>
+
+                <div class="warning-box">
+                    <h4>⚠️ 레버리지의 양날의 검</h4>
+                    <p>높은 레버리지는 수익도 크지만 손실도 그만큼 커집니다. 50x 레버리지에서 가격이 2%만 반대로 움직여도 <strong>청산(Liquidation)</strong>되어 투자금 전액을 잃습니다.</p>
+                </div>
+
+                <h3>롱(Long)과 숏(Short)</h3>
+                <ul>
+                    <li><strong style="color: var(--green);">롱(Long)</strong>: 가격이 오를 것으로 예상하고 매수. 가격 상승 시 이익, 하락 시 손실.</li>
+                    <li><strong style="color: var(--red);">숏(Short)</strong>: 가격이 내릴 것으로 예상하고 매도. 가격 하락 시 이익, 상승 시 손실.</li>
+                </ul>
+
+                <h2>차트 지표 읽는 법</h2>
+                <p>비트위트에서는 실제 트레이더들이 사용하는 기술적 지표들을 제공합니다. 이 지표들을 이해하면 더 나은 투자 결정을 내릴 수 있습니다.</p>
+
+                <div class="indicator-box">
+                    <div class="indicator-name">📊 이동평균선 (Moving Average)</div>
+                    <p>일정 기간 동안의 평균 가격을 나타내는 선입니다.</p>
+                    <ul>
+                        <li><strong style="color: #ff9500;">MA7 (주황색)</strong>: 단기 추세 (7개 캔들 평균)</li>
+                        <li><strong style="color: #00d4ff;">MA25 (청록색)</strong>: 중기 추세 (25개 캔들 평균)</li>
+                        <li><strong style="color: #a855f7;">MA99 (보라색)</strong>: 장기 추세 (99개 캔들 평균)</li>
+                    </ul>
+                    <div class="signal-box">
+                        <div class="signal buy"><div class="signal-title">🐂 골든크로스</div><p>단기선이 장기선을 상향 돌파 → 상승 신호</p></div>
+                        <div class="signal sell"><div class="signal-title">🐻 데드크로스</div><p>단기선이 장기선을 하향 돌파 → 하락 신호</p></div>
+                    </div>
+                </div>
+
+                <div class="indicator-box">
+                    <div class="indicator-name">📈 RSI (Relative Strength Index)</div>
+                    <p>상대강도지수. 0~100 사이의 값으로 과매수/과매도 상태를 나타냅니다.</p>
+                    <div class="signal-box">
+                        <div class="signal buy"><div class="signal-title">RSI 30 이하</div><p>과매도 상태 → 반등 가능성 (매수 고려)</p></div>
+                        <div class="signal sell"><div class="signal-title">RSI 70 이상</div><p>과매수 상태 → 조정 가능성 (매도 고려)</p></div>
+                    </div>
+                </div>
+
+                <div class="indicator-box">
+                    <div class="indicator-name">📉 MACD</div>
+                    <p>이동평균 수렴·확산 지표. 추세의 방향과 강도를 나타냅니다.</p>
+                    <div class="signal-box">
+                        <div class="signal buy"><div class="signal-title">MACD 양수 (+)</div><p>상승 모멘텀 → 롱 포지션 유리</p></div>
+                        <div class="signal sell"><div class="signal-title">MACD 음수 (-)</div><p>하락 모멘텀 → 숏 포지션 유리</p></div>
+                    </div>
+                </div>
+
+                <div class="indicator-box">
+                    <div class="indicator-name">🎯 볼린저 밴드 (Bollinger Bands)</div>
+                    <p>가격의 변동성을 나타내는 밴드. 노란색 음영 영역으로 표시됩니다.</p>
+                    <ul>
+                        <li>가격이 <strong>상단 밴드</strong> 근처: 과매수 가능성</li>
+                        <li>가격이 <strong>하단 밴드</strong> 근처: 과매도 가능성</li>
+                        <li>밴드가 <strong>좁아지면</strong>: 큰 변동성 돌파 예상</li>
+                    </ul>
+                </div>
+
+                <h2>시장 이벤트 이해하기</h2>
+                <p>게임에서는 실제 시장처럼 다양한 이벤트가 발생하여 가격에 영향을 줍니다:</p>
+
+                <ul>
+                    <li><strong style="color: var(--green);">🐋 고래 매수</strong>: 대량 매수 주문 → 가격 상승 압력</li>
+                    <li><strong style="color: var(--red);">🐋 고래 매도</strong>: 대량 매도 주문 → 가격 하락 압력</li>
+                    <li><strong style="color: var(--green);">📰 호재</strong>: 긍정적 뉴스 → 상승 추세</li>
+                    <li><strong style="color: var(--red);">📰 악재</strong>: 부정적 뉴스 → 하락 추세</li>
+                    <li><strong>💥 청산 캐스케이드</strong>: 연쇄 청산으로 인한 급격한 가격 변동</li>
+                </ul>
+
+                <h2>승리 전략</h2>
+
+                <div class="strategy-card">
+                    <h4>전략 1: 보수적 접근 (초보자 추천)</h4>
+                    <ul>
+                        <li>레버리지는 5~10x로 제한</li>
+                        <li>한 번에 자금의 10~20%만 투자</li>
+                        <li>RSI 30 이하에서만 롱, 70 이상에서만 숏</li>
+                        <li>목표 수익률 달성 시 즉시 청산</li>
+                    </ul>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>전략 2: 추세 추종 (중급자)</h4>
+                    <ul>
+                        <li>골든크로스 발생 시 롱, 데드크로스 발생 시 숏</li>
+                        <li>MACD 방향과 동일한 포지션만 진입</li>
+                        <li>레버리지 10~25x 사용</li>
+                        <li>물타기(DCA)로 평균 단가 조절</li>
+                    </ul>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>전략 3: 역발상 (고급자)</h4>
+                    <ul>
+                        <li>RSI 극단값(20 이하, 80 이상)에서 반대 포지션</li>
+                        <li>볼린저 밴드 터치 시 반대 방향 진입</li>
+                        <li>레버리지 25~50x로 짧은 스윙</li>
+                        <li>손절 라인 엄격히 준수</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 10억 달성 팁</h4>
+                    <ul>
+                        <li>처음부터 높은 레버리지로 올인하지 마세요</li>
+                        <li>연속 손실 시 잠시 쉬고 시장을 관찰하세요</li>
+                        <li>수익이 나면 일부는 확정하고, 나머지로 재투자하세요</li>
+                        <li>청산 경고가 뜨면 즉시 포지션을 줄이세요</li>
+                        <li>이벤트 발생 후 추세가 형성될 때까지 기다리세요</li>
+                    </ul>
+                </div>
+
+                <h2>자주 하는 실수</h2>
+
+                <ul>
+                    <li><strong>올인:</strong> 전 재산을 한 번에 투자하면 한 번의 실패로 게임이 끝납니다</li>
+                    <li><strong>역추세 매매:</strong> 추세를 거스르는 포지션은 위험합니다</li>
+                    <li><strong>손절 미실행:</strong> 손실을 인정하고 빠르게 빠져나오는 것이 중요합니다</li>
+                    <li><strong>과도한 물타기:</strong> 계속 추가 매수하다가 청산당할 수 있습니다</li>
+                </ul>
+
+                <h2>실제 투자와의 차이점</h2>
+
+                <div class="warning-box">
+                    <h4>⚠️ 면책 조항</h4>
+                    <p>비트위트 챌린지는 순수하게 <strong>교육 및 엔터테인먼트 목적</strong>의 게임입니다. 실제 암호화폐 시장과는 다음과 같은 차이가 있습니다:</p>
+                    <ul>
+                        <li>실제 시장은 훨씬 더 복잡하고 예측 불가능합니다</li>
+                        <li>게임에서의 성공이 실제 투자 성공을 보장하지 않습니다</li>
+                        <li>실제 투자 결정 시 반드시 전문가의 조언을 구하세요</li>
+                    </ul>
+                </div>
+
+                <div class="cta-box">
+                    <h3>💰 지금 바로 도전하세요!</h3>
+                    <p style="margin-bottom: 1.5rem;">$10,000 → $1,000,000 챌린지에 도전해보세요!</p>
+                    <a href="/bitwit/index.html" class="cta-button">비트위트 챌린지 시작하기 →</a>
+                </div>
+            </div>
+
+            <div class="related-articles">
+                <h3>📚 관련 글</h3>
+                <div class="related-list">
+                    <a href="/blog/color-sense-guide.html" class="related-item"><span class="related-icon">🎨</span><div><div class="related-title">절대색감이란? 색채 인식의 모든 것</div><div class="related-desc">색감 테스트 원리와 향상 방법</div></div></a>
+                    <a href="/blog/faketalk-guide.html" class="related-item"><span class="related-icon">💬</span><div><div class="related-title">가짜톡 만들기 완벽 가이드</div><div class="related-desc">카카오톡 스타일 채팅 스크린샷 만드는 방법</div></div></a>
+                </div>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/">홈</a>
+                <a href="/about.html">소개</a>
+                <a href="/terms.html">이용약관</a>
+                <a href="/privacy.html">개인정보처리방침</a>
+                <a href="/contact.html">문의</a>
+            </div>
+            <p>© 2024-2026 WitLab. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

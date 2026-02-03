@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WitLab 소개 - 무료 웹 도구와 미니 게임을 제공하는 디지털 실험실입니다. 개발자의 엉뚱한 상상을 현실로 만듭니다.">
+    <meta name="keywords" content="WitLab, 소개, 개발자, 웹도구, 미니게임, 무료">
+    <title>WitLab 소개 | About Us</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --yellow: #f6ff00;
+            --pink: #ff2d6a;
+            --blue: #00f0ff;
+            --white: #fefefe;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--yellow);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo::after {
+            content: '_';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .page-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--yellow), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--yellow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            color: #b0b0b0;
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .value-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            border-color: var(--yellow);
+            transform: translateY(-3px);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .value-desc {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .team-section {
+            background: rgba(246, 255, 0, 0.05);
+            border: 1px solid rgba(246, 255, 0, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .team-section h3 {
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            background: var(--bg);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .contact-item a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            color: #444;
+            font-size: 0.8rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            .nav-links { gap: 1rem; font-size: 0.8rem; }
+            .values-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="/" class="logo">WITLAB</a>
+            <nav class="nav-links">
+                <a href="/">홈</a>
+                <a href="/about.html">소개</a>
+                <a href="/contact.html">문의</a>
+            </nav>
+        </header>
+
+        <main>
+            <h1 class="page-title">About WitLab</h1>
+            <p class="page-subtitle">엉뚱한 상상을 현실로 만드는 디지털 실험실</p>
+
+            <section class="content-section">
+                <h2 class="section-title">🧪 WitLab이란?</h2>
+                <div class="section-content">
+                    <p>
+                        WitLab은 <strong>"Wit(재치) + Lab(연구소)"</strong>의 합성어로, 
+                        개발자의 창의적인 아이디어를 실험하고 누구나 무료로 사용할 수 있는 
+                        웹 도구와 미니 게임을 제공하는 디지털 실험실입니다.
+                    </p>
+                    <p>
+                        2024년에 시작된 WitLab은 "설치 없이, 가입 없이, 비용 없이"라는 
+                        원칙 아래 다양한 유틸리티와 엔터테인먼트 콘텐츠를 제작하고 있습니다. 
+                        모든 도구는 웹 브라우저에서 바로 실행되며, 개인정보를 수집하지 않습니다.
+                    </p>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">🎯 우리의 미션</h2>
+                <div class="section-content">
+                    <div class="highlight-box">
+                        <h4>"누구나 쉽게 접근할 수 있는 유용한 도구를 만든다"</h4>
+                        <p>
+                            복잡한 소프트웨어 설치나 유료 구독 없이도 일상에서 필요한 
+                            작은 도구들을 웹에서 바로 사용할 수 있어야 한다고 믿습니다.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">💡 핵심 가치</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">🆓</div>
+                        <div class="value-title">완전 무료</div>
+                        <div class="value-desc">모든 도구와 게임은 무료로 제공됩니다</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🚀</div>
+                        <div class="value-title">설치 불필요</div>
+                        <div class="value-desc">브라우저만 있으면 바로 사용 가능</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🔒</div>
+                        <div class="value-title">프라이버시 존중</div>
+                        <div class="value-desc">개인정보를 수집하거나 저장하지 않습니다</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🎨</div>
+                        <div class="value-title">재미있는 경험</div>
+                        <div class="value-desc">유용하면서도 즐거운 도구를 만듭니다</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">📦 제공 서비스</h2>
+                <div class="section-content">
+                    <p>현재 WitLab에서 제공하는 주요 서비스입니다:</p>
+                    
+                    <div class="highlight-box">
+                        <h4>🎨 절대색감 테스트 (Color Sense Test)</h4>
+                        <p>당신의 색채 인식 능력을 테스트하는 반응형 웹 게임입니다. 
+                        미세한 색상 차이를 찾아내며 레벨이 높아질수록 난이도가 상승합니다. 
+                        15개국 언어를 지원하며, 친구들과 점수를 공유할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4>💬 가짜톡 만들기 (FakeTalk Maker)</h4>
+                        <p>카카오톡, WhatsApp, iMessage 스타일의 채팅 스크린샷을 
+                        만들 수 있는 무료 도구입니다. 프레젠테이션, SNS 콘텐츠 제작, 
+                        패러디 등 다양한 창작 활동에 활용할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4>💰 비트위트 챌린지 (BitWit Trading Simulator)</h4>
+                        <p>실제 돈을 사용하지 않고 가상화폐 레버리지 거래를 체험할 수 있는 
+                        시뮬레이션 게임입니다. 기술적 지표 분석, 시장 이벤트 등 
+                        실제 트레이딩 환경을 재현했습니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="team-section">
+                    <h3>👨‍💻 개발팀 정보</h3>
+                    <div class="section-content">
+                        <p>WitLab은 대한민국에서 운영되는 1인 개발 프로젝트입니다. 
+                        새로운 아이디어나 버그 리포트, 협업 제안은 언제든 환영합니다.</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                📧 <a href="mailto:contact@witlab.kr">contact@witlab.kr</a>
+                            </div>
+                            <div class="contact-item">
+                                🌐 witlab.kr
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">📅 업데이트 계획</h2>
+                <div class="section-content">
+                    <p>WitLab은 매주 새로운 도구와 게임을 업데이트할 예정입니다. 
+                    사용자 피드백을 바탕으로 기존 서비스도 지속적으로 개선하고 있습니다.</p>
+                    <p>관심 있는 도구나 아이디어가 있다면 언제든 연락해 주세요!</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/">홈</a>
+                <a href="/about.html">소개</a>
+                <a href="/terms.html">이용약관</a>
+                <a href="/privacy.html">개인정보처리방침</a>
+                <a href="/contact.html">문의</a>
+            </div>
+            <p>© 2024-2026 WitLab. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

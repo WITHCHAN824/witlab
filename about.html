@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About WitLab – a free browser-based gaming platform offering puzzle, arcade, card, and casual games. No download, no sign-up.">
+  <title>About WitLab – Free Online Browser Games</title>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0d0d1a; --surface:#13132a; --card:#1a1a35;
+      --border:#2a2a55; --accent:#00e5ff; --accent2:#7c4dff;
+      --text:#e8e8ff; --text-muted:#9999cc; --radius:12px;
+    }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { background:rgba(13,13,26,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; flex-shrink:0; }
+    .nav-links { display:flex; gap:24px; list-style:none; }
+    .nav-links a { color:var(--text-muted); text-decoration:none; font-size:.9rem; font-weight:500; }
+    .nav-links a:hover { color:var(--accent); }
+
+    .page { max-width:720px; margin:0 auto; padding:52px 24px 80px; }
+    .page-header { text-align:center; margin-bottom:48px; }
+    .page-tag { display:inline-block; background:rgba(0,229,255,.1); border:1px solid rgba(0,229,255,.25); color:var(--accent); font-size:.72rem; font-weight:700; padding:5px 14px; border-radius:999px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+    .page-header h1 { font-size:2.2rem; font-weight:800; margin-bottom:12px; }
+    .page-header p { color:var(--text-muted); font-size:1rem; max-width:500px; margin:0 auto; }
+
+    .section { margin-bottom:40px; }
+    .section h2 { font-size:1.2rem; font-weight:700; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+    .section p { color:var(--text-muted); line-height:1.8; margin-bottom:12px; }
+    .section p:last-child { margin-bottom:0; }
+
+    .game-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin-top:8px; }
+    .game-item { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 16px; display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text); transition:all .2s; }
+    .game-item:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .game-item-icon { font-size:1.4rem; }
+    .game-item-info h3 { font-size:.88rem; font-weight:700; }
+    .game-item-info span { font-size:.75rem; color:var(--text-muted); }
+
+    .values-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; margin-top:4px; }
+    .value-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px; text-align:center; }
+    .value-icon { font-size:1.8rem; margin-bottom:8px; display:block; }
+    .value-card h3 { font-size:.88rem; font-weight:700; margin-bottom:4px; }
+    .value-card p { font-size:.78rem; color:var(--text-muted); }
+
+    footer { background:var(--surface); border-top:1px solid var(--border); padding:32px 24px; }
+    .footer-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
+    .footer-links a { color:var(--text-muted); text-decoration:none; font-size:.85rem; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-copy { color:var(--text-muted); font-size:.8rem; }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav_games">Games</a></li>
+      <li><a href="/about.html" data-i18n="nav_about">About</a></li>
+      <li><a href="/contact.html" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-tag" data-i18n="about_tag">About Us</div>
+    <h1 data-i18n="about_h1">What is WitLab?</h1>
+    <p data-i18n="about_subtitle">A free, no-signup gaming platform where you can jump into great browser games in seconds.</p>
+  </div>
+
+  <div class="section">
+    <h2 data-i18n="about_s1_title">Our Mission</h2>
+    <p data-i18n="about_s1_p1">WitLab was created with a simple idea: great games should be accessible to everyone, instantly. No downloads. No accounts. No paywalls. Just pick a game and play.</p>
+    <p data-i18n="about_s1_p2">We believe browser games are one of the most underappreciated forms of entertainment. A well-designed browser game can deliver as much fun and mental stimulation as any downloaded title — and it can do it in seconds, on any device.</p>
+    <p data-i18n="about_s1_p3">Our mission is to build and curate a collection of the best free browser games, ranging from brain-training puzzles to fast-paced arcade action. Every game on WitLab is hand-crafted, tested for quality, and designed to be genuinely enjoyable.</p>
+  </div>
+
+  <div class="section">
+    <h2 data-i18n="about_s2_title">Our Games</h2>
+    <p data-i18n="about_s2_p">We currently offer six original games across four categories, with more on the way.</p>
+    <div class="game-list">
+      <a class="game-item" href="/games/2048.html"><span class="game-item-icon">🔢</span><div class="game-item-info"><h3 data-i18n="game_2048_title">2048</h3><span data-i18n="tag_puzzle">Puzzle</span></div></a>
+      <a class="game-item" href="/games/snake.html"><span class="game-item-icon">🐍</span><div class="game-item-info"><h3 data-i18n="game_snake_title">Snake</h3><span data-i18n="tag_arcade">Arcade</span></div></a>
+      <a class="game-item" href="/games/brick-breaker.html"><span class="game-item-icon">🧱</span><div class="game-item-info"><h3 data-i18n="game_brick_title">Brick Breaker</h3><span data-i18n="tag_arcade">Arcade</span></div></a>
+      <a class="game-item" href="/games/memory-match.html"><span class="game-item-icon">🃏</span><div class="game-item-info"><h3 data-i18n="game_memory_title">Memory Match</h3><span data-i18n="tag_card">Card</span></div></a>
+      <a class="game-item" href="/games/tic-tac-toe.html"><span class="game-item-icon">❌</span><div class="game-item-info"><h3 data-i18n="game_ttt_title">Tic-Tac-Toe</h3><span data-i18n="tag_board">Board</span></div></a>
+      <a class="game-item" href="/games/clicker.html"><span class="game-item-icon">⚡</span><div class="game-item-info"><h3 data-i18n="game_clicker_title">Power Clicker</h3><span data-i18n="tag_casual">Casual</span></div></a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 data-i18n="about_s3_title">Our Values</h2>
+    <div class="values-grid">
+      <div class="value-card"><span class="value-icon">🆓</span><h3 data-i18n="about_v1_title">Always Free</h3><p data-i18n="about_v1_p">Every game on WitLab is 100% free, forever.</p></div>
+      <div class="value-card"><span class="value-icon">🔒</span><h3 data-i18n="about_v2_title">Privacy First</h3><p data-i18n="about_v2_p">We don't require accounts or collect personal data to play.</p></div>
+      <div class="value-card"><span class="value-icon">📱</span><h3 data-i18n="about_v3_title">Play Anywhere</h3><p data-i18n="about_v3_p">All games are optimized for desktop, tablet, and mobile.</p></div>
+      <div class="value-card"><span class="value-icon">⚡</span><h3 data-i18n="about_v4_title">Zero Friction</h3><p data-i18n="about_v4_p">Click a game, it loads. No installs, no sign-ups.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 data-i18n="about_s4_title">Who We Are</h2>
+    <p data-i18n="about_s4_p1">WitLab is an independent gaming platform passionate about browser-based game development. We're a small team of developers and game enthusiasts who love making things that are fun to play.</p>
+    <p data-i18n="about_s4_p2">We're constantly working on new games and improvements. If you'd like to get in touch — whether to say hello, report a bug, or suggest a game idea — feel free to <a href="/contact.html" style="color:var(--accent);text-decoration:none;">contact us</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="logo" href="/" style="font-size:1.1rem;">WitLab</a>
+    <nav class="footer-links">
+      <a href="/" data-i18n="footer_home">Home</a>
+      <a href="/about.html" data-i18n="footer_about">About</a>
+      <a href="/contact.html" data-i18n="footer_contact">Contact</a>
+      <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a>
+    </nav>
+    <span class="footer-copy" data-i18n="footer_copy">© 2025 WitLab. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="/js/i18n.js"></script>
+</body>
+</html>

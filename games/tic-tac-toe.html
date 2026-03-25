@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play Tic-Tac-Toe online against a smart AI or a friend. Classic 3-in-a-row strategy game in your browser. Free, no download needed.">
+  <title>Tic-Tac-Toe – Strategy Game | WitLab</title>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0d0d1a; --card:#1a1a35; --border:#2a2a55;
+      --x:#ff5252; --o:#00e5ff; --text:#e8e8ff; --text-muted:#9999cc;
+      --radius:12px;
+    }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { background:rgba(13,13,26,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,#00e5ff,#7c4dff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .back { color:var(--text-muted); text-decoration:none; font-size:.9rem; }
+    .back:hover { color:var(--x); }
+
+    .game-page { max-width:440px; margin:0 auto; padding:28px 16px; }
+    .game-header { text-align:center; margin-bottom:18px; }
+    .game-header h1 { font-size:2rem; font-weight:800; margin-bottom:6px; }
+    .game-header p { color:var(--text-muted); font-size:.9rem; }
+
+    /* Mode / difficulty toggles */
+    .toggle-group { display:flex; gap:8px; justify-content:center; margin-bottom:12px; flex-wrap:wrap; }
+    .toggle { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:8px 16px; color:var(--text-muted); font-size:.83rem; font-weight:600; cursor:pointer; transition:all .2s; }
+    .toggle.active { border-color:var(--x); color:var(--x); background:rgba(255,82,82,.1); }
+    .toggle.active-o { border-color:var(--o); color:var(--o); background:rgba(0,229,255,.1); }
+
+    /* Score bar */
+    .scoreboard { display:flex; gap:8px; justify-content:center; margin-bottom:16px; }
+    .score-box { flex:1; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 8px; text-align:center; }
+    .score-box.active { border-color:var(--x); }
+    .score-label { font-size:.68rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+    .score-val { font-size:1.4rem; font-weight:800; }
+    .x-color { color:var(--x); }
+    .o-color { color:var(--o); }
+    .d-color { color:#aaa; }
+
+    /* Status */
+    #status { text-align:center; font-size:1rem; font-weight:600; margin-bottom:14px; min-height:28px; }
+
+    /* Board */
+    #board { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
+    .cell {
+      aspect-ratio:1; background:var(--card); border:2px solid var(--border);
+      border-radius:var(--radius); cursor:pointer; display:flex; align-items:center;
+      justify-content:center; font-size:3rem; font-weight:900; transition:all .2s;
+      user-select:none;
+    }
+    .cell:hover:not(.taken) { border-color:#555588; background:#22224a; }
+    .cell.taken { cursor:default; }
+    .cell.X { color:var(--x); }
+    .cell.O { color:var(--o); }
+    .cell.win { background:rgba(124,77,255,.18); border-color:#7c4dff; animation:glow .6s ease infinite alternate; }
+    @keyframes glow { from{box-shadow:0 0 8px rgba(124,77,255,.4)} to{box-shadow:0 0 20px rgba(124,77,255,.8)} }
+
+    .ctrl-row { display:flex; gap:10px; justify-content:center; margin-bottom:8px; }
+    .btn { background:linear-gradient(135deg,#7c4dff,#5533cc); border:none; border-radius:8px; color:#fff; font-size:.85rem; font-weight:700; cursor:pointer; padding:10px 20px; transition:opacity .2s; }
+    .btn:hover { opacity:.85; }
+
+    .how-to { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-top:20px; }
+    .how-to h2 { font-size:1rem; font-weight:700; margin-bottom:12px; }
+    .how-to ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .how-to li { display:flex; gap:10px; font-size:.87rem; color:var(--text-muted); }
+    footer { text-align:center; padding:28px 16px; color:var(--text-muted); font-size:.8rem; }
+    footer a { color:var(--text-muted); text-decoration:none; }
+    footer a:hover { color:var(--x); }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <a class="back" href="/" data-i18n="nav_back">← All Games</a>
+  </div>
+</nav>
+
+<div class="game-page">
+  <div class="game-header">
+    <h1 data-i18n="gttt_title">❌ Tic-Tac-Toe</h1>
+    <p data-i18n="gttt_subtitle">Get three in a row to win!</p>
+  </div>
+
+  <div class="toggle-group">
+    <button class="toggle active" id="btn-vs-ai" onclick="setMode('ai')" data-i18n="ttt_vs_ai">🤖 vs AI</button>
+    <button class="toggle" id="btn-vs-human" onclick="setMode('human')" data-i18n="ttt_vs_human">👥 2 Players</button>
+  </div>
+  <div class="toggle-group" id="diff-row">
+    <button class="toggle active" onclick="setDiff('easy')" id="d-easy" data-i18n="ttt_easy">😊 Easy</button>
+    <button class="toggle" onclick="setDiff('medium')" id="d-medium" data-i18n="ttt_medium">🧠 Medium</button>
+    <button class="toggle" onclick="setDiff('hard')" id="d-hard" data-i18n="ttt_hard">💀 Hard</button>
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-box" id="sx"><div class="score-label" data-i18n="ttt_you">You (X)</div><div class="score-val x-color" id="sx-val">0</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="ttt_draw">Draw</div><div class="score-val d-color" id="sd-val">0</div></div>
+    <div class="score-box"><div class="score-label" id="o-label" data-i18n="ttt_ai">AI (O)</div><div class="score-val o-color" id="so-val">0</div></div>
+  </div>
+
+  <div id="status">Your turn (X)</div>
+
+  <div id="board">
+    <div class="cell" onclick="cellClick(0)"></div>
+    <div class="cell" onclick="cellClick(1)"></div>
+    <div class="cell" onclick="cellClick(2)"></div>
+    <div class="cell" onclick="cellClick(3)"></div>
+    <div class="cell" onclick="cellClick(4)"></div>
+    <div class="cell" onclick="cellClick(5)"></div>
+    <div class="cell" onclick="cellClick(6)"></div>
+    <div class="cell" onclick="cellClick(7)"></div>
+    <div class="cell" onclick="cellClick(8)"></div>
+  </div>
+
+  <div class="ctrl-row">
+    <button class="btn" onclick="resetBoard()" data-i18n="btn_new_round">↺ New Round</button>
+    <button class="btn" style="background:linear-gradient(135deg,#333,#222);color:#aaa" onclick="resetAll()" data-i18n="btn_reset_scores">Reset Scores</button>
+  </div>
+
+  <div class="how-to">
+    <h2 data-i18n="gttt_how_title">📖 How to Play</h2>
+    <ul>
+      <li><span>❌</span><span data-i18n="gttt_h1">You play as <strong>X</strong>. Click any empty cell to place your mark.</span></li>
+      <li><span>🤖</span><span data-i18n="gttt_h2">In <strong>AI mode</strong>, the computer plays O. Choose Easy, Medium, or Hard AI.</span></li>
+      <li><span>👥</span><span data-i18n="gttt_h3">In <strong>2 Player mode</strong>, take turns on the same device.</span></li>
+      <li><span>🏆</span><span data-i18n="gttt_h4">First to get <strong>three in a row</strong> (horizontally, vertically, or diagonally) wins.</span></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <a href="/" data-i18n="footer_home">← Back to WitLab</a> &nbsp;|&nbsp; <a href="/about.html" data-i18n="footer_about">About</a> &nbsp;|&nbsp; <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy</a>
+</footer>
+
+<script>
+const WINS=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+let board, turn, gameOver, mode='ai', diff='easy';
+let scores={X:0,O:0,D:0};
+
+function setMode(m){
+  mode=m;
+  document.getElementById('btn-vs-ai').className='toggle'+(m==='ai'?' active':'');
+  document.getElementById('btn-vs-human').className='toggle'+(m==='human'?' active':'');
+  document.getElementById('diff-row').style.display=m==='ai'?'flex':'none';
+  document.getElementById('o-label').textContent=m==='ai'?'AI (O)':'Player 2 (O)';
+  resetAll();
+}
+
+function setDiff(d){
+  diff=d;
+  ['easy','medium','hard'].forEach(x=>document.getElementById('d-'+x).className='toggle'+(x===d?' active':''));
+  resetBoard();
+}
+
+function initBoard(){
+  board=Array(9).fill(null); turn='X'; gameOver=false;
+  const cells=document.querySelectorAll('.cell');
+  cells.forEach(c=>{c.textContent='';c.className='cell';});
+  updateStatus();
+}
+
+function resetBoard(){ initBoard(); }
+function resetAll(){ scores={X:0,O:0,D:0}; updateScores(); resetBoard(); }
+
+function cellClick(i){
+  if(gameOver||board[i]) return;
+  if(mode==='ai'&&turn==='O') return;
+  place(i, turn);
+  if(!gameOver&&mode==='ai'&&turn==='O'){
+    setTimeout(aiMove, 300);
+  }
+}
+
+function place(i, mark){
+  board[i]=mark;
+  const cell=document.querySelectorAll('.cell')[i];
+  cell.textContent=mark; cell.classList.add(mark,'taken');
+  const win=checkWin(board);
+  if(win){
+    gameOver=true;
+    win.line.forEach(j=>document.querySelectorAll('.cell')[j].classList.add('win'));
+    scores[mark]++;
+    updateScores();
+    setStatus(mark==='X'?(mode==='ai'?'🎉 You win!':'🎉 X wins!'):mode==='ai'?'🤖 AI wins!':'🎉 O wins!','');
+  } else if(board.every(c=>c)){
+    gameOver=true; scores.D++;
+    updateScores(); setStatus("It's a draw! 🤝",'');
+  } else {
+    turn=turn==='X'?'O':'X';
+    updateStatus();
+  }
+}
+
+function updateStatus(){
+  if(mode==='ai') setStatus(turn==='X'?'Your turn (X) ❌':'AI is thinking... 🤖','');
+  else setStatus(`Player ${turn}'s turn ${turn==='X'?'❌':'⭕'}`,'');
+}
+
+function setStatus(t){ document.getElementById('status').textContent=t; }
+
+function updateScores(){
+  document.getElementById('sx-val').textContent=scores.X;
+  document.getElementById('so-val').textContent=scores.O;
+  document.getElementById('sd-val').textContent=scores.D;
+}
+
+function checkWin(b){
+  for(let line of WINS){
+    const [a,c1,c2]=line;
+    if(b[a]&&b[a]===b[c1]&&b[a]===b[c2]) return {winner:b[a],line};
+  }
+  return null;
+}
+
+function aiMove(){
+  if(gameOver) return;
+  let idx;
+  if(diff==='easy') idx=easyMove();
+  else if(diff==='medium') idx=Math.random()<0.6?bestMove('O'):easyMove();
+  else idx=bestMove('O');
+  place(idx,'O');
+}
+
+function easyMove(){
+  const empty=board.map((v,i)=>v?null:i).filter(v=>v!==null);
+  return empty[Math.floor(Math.random()*empty.length)];
+}
+
+function bestMove(player){
+  // minimax
+  let best={score:-Infinity}, opp=player==='O'?'X':'O';
+  for(let i=0;i<9;i++){
+    if(!board[i]){
+      board[i]=player;
+      const s=minimax(board,0,false,player,opp,-Infinity,Infinity);
+      board[i]=null;
+      if(s>best.score){best={score:s,idx:i};}
+    }
+  }
+  return best.idx;
+}
+
+function minimax(b,depth,isMax,ai,human,alpha,beta){
+  const win=checkWin(b);
+  if(win) return win.winner===ai?10-depth:depth-10;
+  if(b.every(c=>c)) return 0;
+  if(depth>6) return 0; // limit depth for performance
+  if(isMax){
+    let best=-Infinity;
+    for(let i=0;i<9;i++){
+      if(!b[i]){b[i]=ai;best=Math.max(best,minimax(b,depth+1,false,ai,human,alpha,beta));b[i]=null;alpha=Math.max(alpha,best);if(beta<=alpha)break;}
+    }
+    return best;
+  } else {
+    let best=Infinity;
+    for(let i=0;i<9;i++){
+      if(!b[i]){b[i]=human;best=Math.min(best,minimax(b,depth+1,true,ai,human,alpha,beta));b[i]=null;beta=Math.min(beta,best);if(beta<=alpha)break;}
+    }
+    return best;
+  }
+}
+
+initBoard();
+document.getElementById('diff-row').style.display='flex';
+</script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

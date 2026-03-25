@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WitLab – Play free online browser games. Puzzle, arcade, card and casual games you can enjoy instantly, no download needed.">
+  <meta name="keywords" content="free online games, browser games, puzzle games, arcade games, card games, casual games, 2048, snake, brick breaker">
+  <meta name="author" content="WitLab">
+  <meta property="og:title" content="WitLab – Free Online Browser Games">
+  <meta property="og:description" content="Play fun browser-based games for free. No download, no sign-up. Just pick a game and play!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://witlab.io">
+  <title>WitLab – Free Online Browser Games</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d1a; --surface: #13132a; --card: #1a1a35;
+      --border: #2a2a55; --accent: #00e5ff; --accent2: #7c4dff;
+      --accent3: #69ff47; --text: #e8e8ff; --text-muted: #9999cc; --radius: 16px;
+    }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+    nav { background: rgba(13,13,26,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; flex-shrink: 0; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .hero { text-align: center; padding: 80px 24px 60px; background: radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.08) 0%, transparent 70%); }
+    .hero-badge { display: inline-block; background: rgba(0,229,255,0.12); border: 1px solid rgba(0,229,255,0.3); color: var(--accent); font-size: 0.78rem; font-weight: 600; letter-spacing: 2px; padding: 6px 18px; border-radius: 999px; text-transform: uppercase; margin-bottom: 20px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+    .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 560px; margin: 0 auto 36px; }
+    .hero-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--accent); display: block; }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .section { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+    .section-header h2 { font-size: 1.5rem; font-weight: 700; }
+    .section-tag { background: rgba(124,77,255,0.15); border: 1px solid rgba(124,77,255,0.3); color: var(--accent2); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 1px; text-transform: uppercase; }
+    .divider { height: 1px; background: var(--border); margin: 0 24px 60px; }
+    .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+    .game-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .game-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,229,255,0.15); }
+    .game-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
+    .game-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(26,26,53,0.8)); }
+    .game-info { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .game-info h3 { font-size: 1.05rem; font-weight: 700; }
+    .game-info p { font-size: 0.85rem; color: var(--text-muted); flex: 1; }
+    .game-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .game-tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; }
+    .tag-puzzle  { background: rgba(0,229,255,0.12); color: var(--accent); border: 1px solid rgba(0,229,255,0.25); }
+    .tag-arcade  { background: rgba(105,255,71,0.12); color: var(--accent3); border: 1px solid rgba(105,255,71,0.25); }
+    .tag-card    { background: rgba(255,183,0,0.12); color: #ffb700; border: 1px solid rgba(255,183,0,0.25); }
+    .tag-casual  { background: rgba(124,77,255,0.12); color: var(--accent2); border: 1px solid rgba(124,77,255,0.25); }
+    .play-btn { font-size: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 4px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; text-align: center; }
+    .feature-icon { font-size: 2.5rem; margin-bottom: 14px; display: block; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.85rem; color: var(--text-muted); }
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 40px 24px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { color: var(--text-muted); font-size: 0.82rem; }
+    @media (max-width: 600px) { .nav-links { display: none; } .hero { padding: 48px 16px 40px; } .hero-stats { gap: 24px; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav_games">Games</a></li>
+      <li><a href="/about.html" data-i18n="nav_about">About</a></li>
+      <li><a href="/contact.html" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge" data-i18n="hero_badge">🎮 Free Browser Games</div>
+  <h1 data-i18n="hero_h1">Play. Think. <span data-i18n="hero_h1_span">Win.</span></h1>
+  <p data-i18n="hero_p">Instant browser games – no download, no sign-up. Jump in and play right now.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">6</span><span class="stat-label" data-i18n="stat_games">Games</span></div>
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label" data-i18n="stat_free">Free</span></div>
+    <div class="stat"><span class="stat-num">0</span><span class="stat-label" data-i18n="stat_dl">Downloads</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="section-header">
+      <h2 data-i18n="all_games">All Games</h2>
+      <span class="section-tag" data-i18n="games_avail">6 Games Available</span>
+    </div>
+    <div class="game-grid">
+
+      <a class="game-card" href="/games/2048.html">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#1a1a3e,#0d2a3e);">🔢</div>
+        <div class="game-info">
+          <h3 data-i18n="game_2048_title">2048</h3>
+          <p data-i18n="game_2048_desc">Slide and merge numbered tiles to reach the legendary 2048 tile.</p>
+          <div class="game-meta">
+            <span class="game-tag tag-puzzle" data-i18n="tag_puzzle">Puzzle</span>
+            <span class="play-btn" data-i18n="play_btn">Play ▶</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="game-card" href="/games/snake.html">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0d2a0d,#1a3e1a);">🐍</div>
+        <div class="game-info">
+          <h3 data-i18n="game_snake_title">Snake</h3>
+          <p data-i18n="game_snake_desc">Guide the snake to eat food and grow longer.</p>
+          <div class="game-meta">
+            <span class="game-tag tag-arcade" data-i18n="tag_arcade">Arcade</span>
+            <span class="play-btn" data-i18n="play_btn">Play ▶</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="game-card" href="/games/brick-breaker.html">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#2a0d1a,#3e1a2a);">🧱</div>
+        <div class="game-info">
+          <h3 data-i18n="game_brick_title">Brick Breaker</h3>
+          <p data-i18n="game_brick_desc">Keep the ball in play and smash all the bricks.</p>
+          <div class="game-meta">
+            <span class="game-tag tag-arcade" data-i18n="tag_arcade">Arcade</span>
+            <span class="play-btn" data-i18n="play_btn">Play ▶</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="game-card" href="/games/memory-match.html">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#1a2a0d,#2a3e0d);">🃏</div>
+        <div class="game-info">
+          <h3 data-i18n="game_memory_title">Memory Match</h3>
+          <p data-i18n="game_memory_desc">Flip cards and find matching pairs in the fewest moves possible.</p>
+          <div class="game-meta">
+            <span class="game-tag tag-card" data-i18n="tag_card">Card</span>
+            <span class="play-btn" data-i18n="play_btn">Play ▶</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="game-card" href="/games/tic-tac-toe.html">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#2a1a0d,#3e2a0d);">❌</div>
+        <div class="game-info">
+          <h3 data-i18n="game_ttt_title">Tic-Tac-Toe</h3>
+          <p data-i18n="game_ttt_desc">The classic 3-in-a-row strategy game with a smart AI opponent.</p>
+          <div class="game-meta">
+            <span class="game-tag tag-card" data-i18n="tag_board">Board</span>
+            <span class="play-btn" data-i18n="play_btn">Play ▶</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="game-card" href="/games/clicker.html">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#1a0d2a,#2a0d3e);">⚡</div>
+        <div class="game-info">
+          <h3 data-i18n="game_clicker_title">Power Clicker</h3>
+          <p data-i18n="game_clicker_desc">Click to generate power, buy upgrades, and conquer the galaxy.</p>
+          <div class="game-meta">
+            <span class="game-tag tag-casual" data-i18n="tag_casual">Casual</span>
+            <span class="play-btn" data-i18n="play_btn">Play ▶</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 data-i18n="why_title">Why WitLab?</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card"><span class="feature-icon">⚡</span><h3 data-i18n="feat1_title">Instant Play</h3><p data-i18n="feat1_desc">Every game loads directly in your browser. Zero downloads, zero waiting.</p></div>
+      <div class="feature-card"><span class="feature-icon">💡</span><h3 data-i18n="feat2_title">Brain Training</h3><p data-i18n="feat2_desc">Our games are designed to challenge your memory, reflexes, and strategic thinking.</p></div>
+      <div class="feature-card"><span class="feature-icon">🆓</span><h3 data-i18n="feat3_title">Always Free</h3><p data-i18n="feat3_desc">All games are completely free to play. No hidden fees, no premium tiers.</p></div>
+      <div class="feature-card"><span class="feature-icon">📱</span><h3 data-i18n="feat4_title">Works Everywhere</h3><p data-i18n="feat4_desc">Fully responsive design — play on desktop, tablet, or mobile.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a class="logo" href="/" style="font-size:1.2rem;">WitLab</a>
+    <nav class="footer-links">
+      <a href="/" data-i18n="footer_home">Home</a>
+      <a href="/about.html" data-i18n="footer_about">About</a>
+      <a href="/contact.html" data-i18n="footer_contact">Contact</a>
+      <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a>
+    </nav>
+    <span class="footer-copy" data-i18n="footer_copy">© 2025 WitLab. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="/js/i18n.js"></script>
+</body>
+</html>

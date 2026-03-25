@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play 2048 online for free – slide and merge tiles to reach 2048. A classic number puzzle game in your browser.">
+  <title>2048 – Number Puzzle | WitLab</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d1a; --surface: #13132a; --card: #1a1a35;
+      --border: #2a2a55; --accent: #00e5ff; --accent2: #7c4dff;
+      --text: #e8e8ff; --text-muted: #9999cc; --radius: 12px;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    nav {
+      background: rgba(13,13,26,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top:0; z-index:100;
+    }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; flex-shrink:0; }
+    .back { color:var(--text-muted); text-decoration:none; font-size:.9rem; display:flex; align-items:center; gap:6px; flex-shrink:0; }
+    .back:hover { color:var(--accent); }
+
+    .game-page { max-width:520px; margin:0 auto; padding:32px 16px; }
+    .game-header { text-align:center; margin-bottom:24px; }
+    .game-header h1 { font-size:2rem; font-weight:800; margin-bottom:6px; }
+    .game-header p { color:var(--text-muted); font-size:.9rem; }
+
+    /* Score row */
+    .score-row { display:flex; gap:12px; justify-content:center; margin-bottom:20px; flex-wrap:wrap; }
+    .score-box {
+      background:var(--card); border:1px solid var(--border); border-radius:10px;
+      padding:10px 24px; text-align:center; min-width:100px;
+    }
+    .score-label { font-size:.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+    .score-val { font-size:1.4rem; font-weight:800; color:var(--accent); }
+
+    /* Controls */
+    .ctrl-row { display:flex; gap:10px; justify-content:center; margin-bottom:20px; }
+    .btn {
+      background:linear-gradient(135deg,var(--accent2),#5533cc);
+      border:none; border-radius:8px; color:#fff;
+      font-size:.85rem; font-weight:700; cursor:pointer;
+      padding:10px 20px; transition:opacity .2s;
+    }
+    .btn:hover { opacity:.85; }
+    .btn-sm { background:var(--card); border:1px solid var(--border); color:var(--text-muted); }
+
+    /* Board */
+    #board-wrapper { position:relative; }
+    #grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:10px;
+      touch-action: none;
+    }
+    .cell {
+      aspect-ratio:1; border-radius:8px;
+      background:#0f0f24; border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:1.4rem;
+      transition:background .12s, color .12s;
+      user-select:none;
+    }
+
+    /* Tile colours */
+    .v2    { background:#1a3040; color:#00e5ff; font-size:1.4rem; }
+    .v4    { background:#1a3a20; color:#69ff47; }
+    .v8    { background:#2a2a10; color:#ffcc02; }
+    .v16   { background:#3a1a10; color:#ff9800; font-size:1.2rem; }
+    .v32   { background:#3a1020; color:#ff5252; font-size:1.2rem; }
+    .v64   { background:#2a0a3a; color:#e040fb; font-size:1.2rem; }
+    .v128  { background:#1a2a4a; color:#40c4ff; font-size:1rem; }
+    .v256  { background:#1a4a1a; color:#69ff47; font-size:1rem; }
+    .v512  { background:#4a3a0a; color:#ffcc02; font-size:1rem; }
+    .v1024 { background:#4a1a10; color:#ff9800; font-size:.85rem; }
+    .v2048 { background:linear-gradient(135deg,#7c4dff,#00e5ff); color:#fff; font-size:.85rem; animation:pulse .5s ease; }
+
+    @keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.08)} }
+
+    /* Overlay */
+    #overlay {
+      display:none; position:absolute; inset:0;
+      background:rgba(13,13,26,.88); border-radius:var(--radius);
+      align-items:center; justify-content:center; flex-direction:column; gap:14px;
+      text-align:center;
+    }
+    #overlay.show { display:flex; }
+    #overlay h2 { font-size:1.6rem; font-weight:800; }
+    #overlay p { color:var(--text-muted); }
+
+    /* How to play */
+    .how-to {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:24px; margin-top:28px;
+    }
+    .how-to h2 { font-size:1rem; font-weight:700; margin-bottom:14px; }
+    .how-to ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .how-to li { display:flex; gap:12px; font-size:.88rem; color:var(--text-muted); align-items:flex-start; }
+    .how-to li span:first-child { font-size:1.1rem; flex-shrink:0; margin-top:1px; }
+
+    footer { text-align:center; padding:32px 16px; color:var(--text-muted); font-size:.8rem; }
+    footer a { color:var(--text-muted); text-decoration:none; }
+    footer a:hover { color:var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <a class="back" href="/" data-i18n="nav_back">← All Games</a>
+  </div>
+</nav>
+
+<div class="game-page">
+  <div class="game-header">
+    <h1 data-i18n="g2048_title">🔢 2048</h1>
+    <p data-i18n="g2048_subtitle">Merge tiles and reach the <strong>2048</strong> tile!</p>
+  </div>
+
+  <div class="score-row">
+    <div class="score-box">
+      <div class="score-label" data-i18n="lbl_score">Score</div>
+      <div class="score-val" id="score">0</div>
+    </div>
+    <div class="score-box">
+      <div class="score-label" data-i18n="lbl_best">Best</div>
+      <div class="score-val" id="best">0</div>
+    </div>
+    <div class="score-box">
+      <div class="score-label" data-i18n="lbl_moves">Moves</div>
+      <div class="score-val" id="moves">0</div>
+    </div>
+  </div>
+
+  <div class="ctrl-row">
+    <button class="btn" onclick="newGame()" data-i18n="btn_new_game">New Game</button>
+    <button class="btn btn-sm" onclick="undo()" data-i18n="btn_undo">↩ Undo</button>
+  </div>
+
+  <div id="board-wrapper">
+    <div id="grid"></div>
+    <div id="overlay">
+      <h2 id="overlay-title"></h2>
+      <p id="overlay-msg"></p>
+      <button class="btn" onclick="newGame()" data-i18n="btn_play_again">Play Again</button>
+    </div>
+  </div>
+
+  <div class="how-to">
+    <h2 data-i18n="g2048_how_title">📖 How to Play</h2>
+    <ul>
+      <li><span>⌨️</span><span data-i18n="g2048_h1">Use <strong>Arrow keys</strong> (or WASD) on desktop to slide all tiles in a direction.</span></li>
+      <li><span>👆</span><span data-i18n="g2048_h2">On mobile, <strong>swipe</strong> in any direction to move tiles.</span></li>
+      <li><span>🔢</span><span data-i18n="g2048_h3">When two tiles with the <strong>same number</strong> collide they merge into one.</span></li>
+      <li><span>🏆</span><span data-i18n="g2048_h4">Reach the <strong>2048</strong> tile to win — but keep going to max your score!</span></li>
+      <li><span>💡</span><span data-i18n="g2048_h5">Pro tip: try to keep your highest tile in a corner and build a chain from there.</span></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <a href="/" data-i18n="footer_home">Home</a> &nbsp;|&nbsp;
+  <a href="/about.html" data-i18n="footer_about">About</a> &nbsp;|&nbsp;
+  <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a>
+</footer>
+
+<script>
+const SIZE = 4;
+let board, score, moves, history;
+let best = 0;
+let touchStartX, touchStartY;
+let won = false;
+
+function init() {
+  board = Array.from({length:SIZE}, () => Array(SIZE).fill(0));
+  score = 0; moves = 0; history = []; won = false;
+  addTile(); addTile();
+  render();
+}
+
+function newGame() {
+  document.getElementById('overlay').classList.remove('show');
+  init();
+}
+
+function addTile() {
+  let empty = [];
+  for (let r=0;r<SIZE;r++) for (let c=0;c<SIZE;c++) if (!board[r][c]) empty.push([r,c]);
+  if (!empty.length) return;
+  let [r,c] = empty[Math.floor(Math.random()*empty.length)];
+  board[r][c] = Math.random() < 0.9 ? 2 : 4;
+}
+
+function copyBoard(b) { return b.map(r=>[...r]); }
+
+function slideRow(row) {
+  let arr = row.filter(x=>x), gained = 0;
+  for (let i=0;i<arr.length-1;i++) {
+    if (arr[i]===arr[i+1]) { arr[i]*=2; gained+=arr[i]; arr.splice(i+1,1); }
+  }
+  while (arr.length<SIZE) arr.push(0);
+  return {row:arr, gained};
+}
+
+function move(dir) {
+  history.push({board:copyBoard(board), score, moves});
+  let moved=false, totalGain=0;
+  const rotated = rotateTo(board, dir);
+  for (let r=0;r<SIZE;r++) {
+    let {row, gained} = slideRow(rotated[r]);
+    if (row.join()!==rotated[r].join()) moved=true;
+    rotated[r]=row; totalGain+=gained;
+  }
+  if (!moved) { history.pop(); return; }
+  board = rotateFrom(rotated, dir);
+  score += totalGain;
+  if (score > best) { best = score; }
+  moves++;
+  addTile();
+  render();
+  checkState();
+}
+
+function rotateTo(b, dir) {
+  let g = copyBoard(b);
+  if (dir==='left') return g;
+  if (dir==='right') return g.map(r=>[...r].reverse());
+  if (dir==='up') return transpose(g);
+  if (dir==='down') return transpose(g).map(r=>[...r].reverse());
+}
+
+function rotateFrom(g, dir) {
+  if (dir==='left') return g;
+  if (dir==='right') return g.map(r=>[...r].reverse());
+  if (dir==='up') return transpose(g);
+  if (dir==='down') return transpose(g.map(r=>[...r].reverse()));
+}
+
+function transpose(g) {
+  return g[0].map((_,c)=>g.map(r=>r[c]));
+}
+
+function undo() {
+  if (!history.length) return;
+  let prev = history.pop();
+  board=prev.board; score=prev.score; moves=prev.moves;
+  won=false;
+  document.getElementById('overlay').classList.remove('show');
+  render();
+}
+
+function checkState() {
+  let maxTile = Math.max(...board.flat());
+  if (!won && maxTile>=2048) {
+    won=true;
+    showOverlay('🎉 You Win!', 'You reached 2048! Keep going for a higher score.');
+    return;
+  }
+  // check moves available
+  for (let r=0;r<SIZE;r++) for (let c=0;c<SIZE;c++) {
+    if (!board[r][c]) return;
+    if (c<SIZE-1 && board[r][c]===board[r][c+1]) return;
+    if (r<SIZE-1 && board[r][c]===board[r+1][c]) return;
+  }
+  showOverlay('Game Over', `No more moves! Final score: ${score}`);
+}
+
+function showOverlay(title, msg) {
+  document.getElementById('overlay-title').textContent = title;
+  document.getElementById('overlay-msg').textContent = msg;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function render() {
+  document.getElementById('score').textContent = score.toLocaleString();
+  document.getElementById('best').textContent = best.toLocaleString();
+  document.getElementById('moves').textContent = moves;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  for (let r=0;r<SIZE;r++) for (let c=0;c<SIZE;c++) {
+    const cell = document.createElement('div');
+    const v = board[r][c];
+    cell.className = 'cell' + (v ? ' v'+v : '');
+    cell.textContent = v || '';
+    grid.appendChild(cell);
+  }
+}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  const map = { ArrowLeft:'left', ArrowRight:'right', ArrowUp:'up', ArrowDown:'down',
+                a:'left', d:'right', w:'up', s:'down' };
+  if (map[e.key]) { e.preventDefault(); move(map[e.key]); }
+});
+
+// Touch
+document.getElementById('grid').addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, {passive:true});
+
+document.getElementById('grid').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx)+Math.abs(dy)<20) return;
+  if (Math.abs(dx)>Math.abs(dy)) move(dx>0?'right':'left');
+  else move(dy>0?'down':'up');
+}, {passive:true});
+
+init();
+</script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

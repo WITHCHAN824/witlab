@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://witlab.io/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://witlab.io/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://witlab.io/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://witlab.io/privacy-policy.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://witlab.io/games/2048.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://witlab.io/games/snake.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://witlab.io/games/brick-breaker.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://witlab.io/games/memory-match.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://witlab.io/games/tic-tac-toe.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://witlab.io/games/clicker.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+</urlset>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play Memory Match online for free. Flip cards to find matching pairs in the fewest moves. A fun brain training card game in your browser.">
+  <title>Memory Match – Card Game | WitLab</title>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0d0d1a; --card:#1a1a35; --border:#2a2a55;
+      --accent:#ffb700; --accent2:#ff6d00; --text:#e8e8ff; --text-muted:#9999cc;
+      --radius:12px;
+    }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { background:rgba(13,13,26,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,#00e5ff,#7c4dff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .back { color:var(--text-muted); text-decoration:none; font-size:.9rem; }
+    .back:hover { color:var(--accent); }
+
+    .game-page { max-width:560px; margin:0 auto; padding:28px 16px; }
+    .game-header { text-align:center; margin-bottom:18px; }
+    .game-header h1 { font-size:2rem; font-weight:800; margin-bottom:6px; }
+    .game-header p { color:var(--text-muted); font-size:.9rem; }
+
+    .score-row { display:flex; gap:10px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; }
+    .score-box { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 16px; text-align:center; min-width:85px; }
+    .score-label { font-size:.68rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+    .score-val { font-size:1.2rem; font-weight:800; color:var(--accent); }
+
+    .ctrl-row { display:flex; gap:10px; justify-content:center; margin-bottom:16px; align-items:center; }
+    .btn { background:linear-gradient(135deg,#cc8800,#885500); border:none; border-radius:8px; color:#fff; font-size:.85rem; font-weight:700; cursor:pointer; padding:10px 20px; transition:opacity .2s; }
+    .btn:hover { opacity:.85; }
+    .diff-sel { background:var(--card); border:1px solid var(--border); color:var(--text); padding:9px 12px; border-radius:8px; font-size:.85rem; cursor:pointer; }
+
+    /* Card grid */
+    #grid { display:grid; gap:10px; margin-bottom:20px; }
+    .card-wrap { aspect-ratio:1; perspective:600px; cursor:pointer; }
+    .card-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .45s ease; border-radius:10px; }
+    .card-wrap.flipped .card-inner { transform:rotateY(180deg); }
+    .card-wrap.matched .card-inner { transform:rotateY(180deg); }
+    .card-face { position:absolute; inset:0; border-radius:10px; backface-visibility:hidden; display:flex; align-items:center; justify-content:center; }
+    .card-back { background:linear-gradient(135deg,#1a1a40,#2a2a5a); border:2px solid var(--border); font-size:1.3rem; }
+    .card-front { background:var(--card); border:2px solid var(--border); transform:rotateY(180deg); font-size:2rem; }
+    .card-wrap.matched .card-front { border-color:var(--accent); background:#2a2010; box-shadow:0 0 12px rgba(255,183,0,.3); }
+    .card-back-pattern { font-size:1.2rem; color:#3a3a6a; pointer-events:none; }
+
+    .win-banner { display:none; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:var(--radius); padding:24px; text-align:center; margin-bottom:20px; }
+    .win-banner.show { display:block; }
+    .win-banner h2 { font-size:1.6rem; font-weight:800; color:#000; margin-bottom:6px; }
+    .win-banner p { color:rgba(0,0,0,.7); }
+
+    .how-to { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-top:4px; }
+    .how-to h2 { font-size:1rem; font-weight:700; margin-bottom:12px; }
+    .how-to ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .how-to li { display:flex; gap:10px; font-size:.87rem; color:var(--text-muted); }
+    footer { text-align:center; padding:28px 16px; color:var(--text-muted); font-size:.8rem; }
+    footer a { color:var(--text-muted); text-decoration:none; }
+    footer a:hover { color:var(--accent); }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <a class="back" href="/" data-i18n="nav_back">← All Games</a>
+  </div>
+</nav>
+
+<div class="game-page">
+  <div class="game-header">
+    <h1 data-i18n="gmem_title">🃏 Memory Match</h1>
+    <p data-i18n="gmem_subtitle">Find all matching pairs in the fewest moves!</p>
+  </div>
+
+  <div class="score-row">
+    <div class="score-box"><div class="score-label" data-i18n="lbl_moves">Moves</div><div class="score-val" id="moves">0</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="lbl_pairs">Pairs</div><div class="score-val" id="pairs">0/8</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="lbl_time">Time</div><div class="score-val" id="timer">0:00</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="lbl_best">Best</div><div class="score-val" id="best">—</div></div>
+  </div>
+
+  <div class="ctrl-row">
+    <button class="btn" onclick="newGame()" data-i18n="btn_new_game_shuffle">🔀 New Game</button>
+    <select class="diff-sel" id="diff">
+      <option value="4x4" data-i18n="diff_easy">4×4 Easy</option>
+      <option value="4x5" selected data-i18n="diff_normal">4×5 Normal</option>
+      <option value="4x6" data-i18n="diff_hard">4×6 Hard</option>
+    </select>
+  </div>
+
+  <div id="win-banner" class="win-banner">
+    <h2>🎉 You Won!</h2>
+    <p id="win-msg"></p>
+  </div>
+
+  <div id="grid"></div>
+
+  <div class="how-to">
+    <h2 data-i18n="gmem_how_title">📖 How to Play</h2>
+    <ul>
+      <li><span>👆</span><span data-i18n="gmem_h1">Click or tap any card to flip it over and reveal the emoji.</span></li>
+      <li><span>🔍</span><span data-i18n="gmem_h2">Flip a second card — if both cards <strong>match</strong>, they stay face up.</span></li>
+      <li><span>❌</span><span data-i18n="gmem_h3">If they don't match, both cards flip back — remember their positions!</span></li>
+      <li><span>🏆</span><span data-i18n="gmem_h4">Match all pairs to win. Try to do it in as few moves as possible!</span></li>
+      <li><span>⏱️</span><span data-i18n="gmem_h5">Race against the clock — or just enjoy your memory training at your own pace.</span></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <a href="/" data-i18n="footer_home">← Back to WitLab</a> &nbsp;|&nbsp; <a href="/about.html" data-i18n="footer_about">About</a> &nbsp;|&nbsp; <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy</a>
+</footer>
+
+<script>
+const EMOJIS=['🐶','🐱','🦊','🐸','🐧','🦋','🌟','🍎','🎮','🎵','🚀','🌈','🍕','🎈','🦄','🔮','🌺','🐙','⚡','🎸','🦁','🐺','🦉','🐬'];
+
+let flipped=[], matched=0, moves=0, total=0, locked=false, timerInt, elapsed=0, best={};
+let rows=5, cols=4;
+
+function newGame(){
+  document.getElementById('win-banner').classList.remove('show');
+  const diff=document.getElementById('diff').value;
+  if(diff==='4x4'){rows=4;cols=4;}else if(diff==='4x5'){rows=5;cols=4;}else{rows=6;cols=4;}
+  const pairs=(rows*cols)/2;
+  total=pairs; matched=0; moves=0; flipped=[]; locked=false; elapsed=0;
+  if(timerInt) clearInterval(timerInt);
+  timerInt=setInterval(()=>{elapsed++;updateTimer();},1000);
+  const pool=EMOJIS.slice(0,pairs);
+  const deck=[...pool,...pool].sort(()=>Math.random()-.5);
+  const grid=document.getElementById('grid');
+  grid.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  grid.innerHTML='';
+  deck.forEach((em,i)=>{
+    const wrap=document.createElement('div');
+    wrap.className='card-wrap';
+    wrap.dataset.idx=i; wrap.dataset.emoji=em;
+    wrap.innerHTML=`<div class="card-inner"><div class="card-face card-back"><span class="card-back-pattern">✦</span></div><div class="card-face card-front">${em}</div></div>`;
+    wrap.addEventListener('click',()=>flipCard(wrap));
+    grid.appendChild(wrap);
+  });
+  document.getElementById('pairs').textContent=`0/${total}`;
+  document.getElementById('moves').textContent='0';
+  updateTimer();
+}
+
+function flipCard(wrap){
+  if(locked||wrap.classList.contains('flipped')||wrap.classList.contains('matched')) return;
+  wrap.classList.add('flipped');
+  flipped.push(wrap);
+  if(flipped.length===2){
+    locked=true; moves++;
+    document.getElementById('moves').textContent=moves;
+    if(flipped[0].dataset.emoji===flipped[1].dataset.emoji){
+      flipped[0].classList.add('matched'); flipped[1].classList.add('matched');
+      matched++; flipped=[];
+      document.getElementById('pairs').textContent=`${matched}/${total}`;
+      locked=false;
+      if(matched===total) winGame();
+    } else {
+      setTimeout(()=>{
+        flipped.forEach(c=>c.classList.remove('flipped'));
+        flipped=[]; locked=false;
+      },900);
+    }
+  }
+}
+
+function winGame(){
+  clearInterval(timerInt);
+  const diff=document.getElementById('diff').value;
+  const key=`best_${diff}`;
+  if(!best[key]||moves<best[key]){
+    best[key]=moves;
+    document.getElementById('best').textContent=`${moves}m`;
+  }
+  const banner=document.getElementById('win-banner');
+  document.getElementById('win-msg').textContent=`${moves} moves · ${formatTime(elapsed)} · ${matched} pairs matched!`;
+  banner.classList.add('show');
+}
+
+function updateTimer(){ document.getElementById('timer').textContent=formatTime(elapsed); }
+function formatTime(s){ return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
+
+newGame();
+</script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

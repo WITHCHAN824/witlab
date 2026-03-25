@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact WitLab – send us feedback, report bugs, or suggest game ideas for our free browser game platform.">
+  <title>Contact | WitLab</title>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root { --bg:#0d0d1a; --surface:#13132a; --card:#1a1a35; --border:#2a2a55; --accent:#00e5ff; --accent2:#7c4dff; --text:#e8e8ff; --text-muted:#9999cc; --radius:12px; }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { background:rgba(13,13,26,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; flex-shrink:0; }
+    .nav-links { display:flex; gap:24px; list-style:none; }
+    .nav-links a { color:var(--text-muted); text-decoration:none; font-size:.9rem; }
+    .nav-links a:hover { color:var(--accent); }
+
+    .page { max-width:600px; margin:0 auto; padding:52px 24px 80px; }
+    .page-header { text-align:center; margin-bottom:40px; }
+    .page-tag { display:inline-block; background:rgba(0,229,255,.1); border:1px solid rgba(0,229,255,.25); color:var(--accent); font-size:.72rem; font-weight:700; padding:5px 14px; border-radius:999px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+    .page-header h1 { font-size:2rem; font-weight:800; margin-bottom:10px; }
+    .page-header p { color:var(--text-muted); font-size:.95rem; }
+
+    .contact-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:32px; }
+    .form-group { margin-bottom:20px; }
+    label { display:block; font-size:.85rem; font-weight:600; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px; }
+    input, textarea, select { width:100%; background:#0f0f24; border:1px solid var(--border); border-radius:8px; color:var(--text); padding:12px 14px; font-size:.9rem; font-family:inherit; outline:none; transition:border-color .2s; }
+    input:focus, textarea:focus, select:focus { border-color:var(--accent); }
+    textarea { resize:vertical; min-height:120px; }
+    select option { background:var(--card); }
+
+    .btn-submit { width:100%; background:linear-gradient(135deg,var(--accent2),#4422aa); border:none; border-radius:8px; color:#fff; font-size:.95rem; font-weight:700; padding:14px; cursor:pointer; transition:opacity .2s; margin-top:8px; }
+    .btn-submit:hover { opacity:.88; }
+
+    #success-msg { display:none; background:rgba(105,255,71,.1); border:1px solid rgba(105,255,71,.3); border-radius:10px; padding:18px; text-align:center; margin-top:16px; color:#69ff47; font-weight:600; }
+
+    .contact-items { display:flex; flex-direction:column; gap:14px; margin-top:28px; }
+    .contact-item { display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; }
+    .contact-item-icon { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
+    .contact-item h3 { font-size:.9rem; font-weight:700; margin-bottom:3px; }
+    .contact-item p { font-size:.83rem; color:var(--text-muted); }
+
+    footer { background:var(--surface); border-top:1px solid var(--border); padding:28px 24px; margin-top:60px; }
+    .footer-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+    .footer-links { display:flex; gap:20px; }
+    .footer-links a { color:var(--text-muted); text-decoration:none; font-size:.85rem; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-copy { color:var(--text-muted); font-size:.8rem; }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav_games">Games</a></li>
+      <li><a href="/about.html" data-i18n="nav_about">About</a></li>
+      <li><a href="/contact.html" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-tag" data-i18n="contact_tag">Get in Touch</div>
+    <h1 data-i18n="contact_h1">Contact Us</h1>
+    <p data-i18n="contact_subtitle">We'd love to hear from you — feedback, bug reports, or game suggestions are always welcome.</p>
+  </div>
+
+  <div class="contact-card">
+    <form id="contactForm" onsubmit="submitForm(event)">
+      <div class="form-group">
+        <label for="name" data-i18n="lbl_name">Your Name</label>
+        <input type="text" id="name" name="name" data-i18n-ph="ph_name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email" data-i18n="lbl_email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="subject" data-i18n="lbl_subject">Subject</label>
+        <select id="subject" name="subject">
+          <option data-i18n="opt_feedback">General Feedback</option>
+          <option data-i18n="opt_bug">Bug Report</option>
+          <option data-i18n="opt_suggestion">Game Suggestion</option>
+          <option data-i18n="opt_biz">Business Inquiry</option>
+          <option data-i18n="opt_other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message" data-i18n="lbl_message">Message</label>
+        <textarea id="message" name="message" data-i18n-ph="ph_message" placeholder="Tell us what's on your mind..." required></textarea>
+      </div>
+      <button class="btn-submit" type="submit" data-i18n="btn_send">Send Message ✉️</button>
+    </form>
+    <div id="success-msg" data-i18n="success_msg">✅ Thank you! Your message has been received. We'll get back to you soon.</div>
+  </div>
+
+  <div class="contact-items">
+    <div class="contact-item">
+      <div class="contact-item-icon">🎮</div>
+      <div>
+        <h3 data-i18n="ci1_title">Found a bug?</h3>
+        <p data-i18n="ci1_p">Let us know which game and what happened. Screenshots are always helpful!</p>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-icon">💡</div>
+      <div>
+        <h3 data-i18n="ci2_title">Have a game idea?</h3>
+        <p data-i18n="ci2_p">We're always looking for new game concepts to build. Share your idea and we might make it!</p>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-icon">📣</div>
+      <div>
+        <h3 data-i18n="ci3_title">Response time</h3>
+        <p data-i18n="ci3_p">We typically respond within 1–2 business days. Thank you for your patience!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="logo" href="/" style="font-size:1.1rem;">WitLab</a>
+    <nav class="footer-links">
+      <a href="/" data-i18n="footer_home">Home</a>
+      <a href="/about.html" data-i18n="footer_about">About</a>
+      <a href="/contact.html" data-i18n="footer_contact">Contact</a>
+      <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a>
+    </nav>
+    <span class="footer-copy" data-i18n="footer_copy">© 2025 WitLab. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('contactForm').style.display='none';
+  document.getElementById('success-msg').style.display='block';
+}
+</script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

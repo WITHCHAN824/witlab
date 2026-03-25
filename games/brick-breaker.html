@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play Brick Breaker online for free. Use your paddle to bounce the ball and smash all the bricks. A classic arcade game in your browser.">
+  <title>Brick Breaker – Arcade | WitLab</title>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0d0d1a; --card:#1a1a35; --border:#2a2a55;
+      --accent:#ff5252; --accent2:#ff9800; --text:#e8e8ff; --text-muted:#9999cc;
+      --radius:12px;
+    }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { background:rgba(13,13,26,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,#00e5ff,#7c4dff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .back { color:var(--text-muted); text-decoration:none; font-size:.9rem; }
+    .back:hover { color:var(--accent); }
+
+    .game-page { max-width:520px; margin:0 auto; padding:28px 16px; }
+    .game-header { text-align:center; margin-bottom:18px; }
+    .game-header h1 { font-size:2rem; font-weight:800; margin-bottom:6px; }
+    .game-header p { color:var(--text-muted); font-size:.9rem; }
+
+    .score-row { display:flex; gap:10px; justify-content:center; margin-bottom:14px; flex-wrap:wrap; }
+    .score-box { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 16px; text-align:center; min-width:80px; }
+    .score-label { font-size:.68rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+    .score-val { font-size:1.2rem; font-weight:800; color:var(--accent); }
+
+    .ctrl-row { display:flex; gap:10px; justify-content:center; margin-bottom:14px; }
+    .btn { background:linear-gradient(135deg,#cc2222,#881111); border:none; border-radius:8px; color:#fff; font-size:.85rem; font-weight:700; cursor:pointer; padding:10px 20px; transition:opacity .2s; }
+    .btn:hover { opacity:.85; }
+
+    #canvas-wrap { position:relative; border-radius:var(--radius); overflow:hidden; border:2px solid var(--border); cursor:none; }
+    canvas { display:block; width:100%; touch-action:none; }
+    #overlay { display:none; position:absolute; inset:0; background:rgba(13,13,26,.9); align-items:center; justify-content:center; flex-direction:column; gap:14px; text-align:center; padding:20px; }
+    #overlay.show { display:flex; }
+    #overlay h2 { font-size:1.6rem; font-weight:800; }
+    #overlay p { color:var(--text-muted); }
+
+    .how-to { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-top:24px; }
+    .how-to h2 { font-size:1rem; font-weight:700; margin-bottom:12px; }
+    .how-to ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .how-to li { display:flex; gap:10px; font-size:.87rem; color:var(--text-muted); }
+    footer { text-align:center; padding:28px 16px; color:var(--text-muted); font-size:.8rem; }
+    footer a { color:var(--text-muted); text-decoration:none; }
+    footer a:hover { color:var(--accent); }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <a class="back" href="/" data-i18n="nav_back">← All Games</a>
+  </div>
+</nav>
+
+<div class="game-page">
+  <div class="game-header">
+    <h1 data-i18n="gbrick_title">🧱 Brick Breaker</h1>
+    <p data-i18n="gbrick_subtitle">Smash every brick and survive all levels!</p>
+  </div>
+
+  <div class="score-row">
+    <div class="score-box"><div class="score-label" data-i18n="lbl_score">Score</div><div class="score-val" id="score">0</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="lbl_level">Level</div><div class="score-val" id="level">1</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="lbl_lives">Lives</div><div class="score-val" id="lives">❤️❤️❤️</div></div>
+    <div class="score-box"><div class="score-label" data-i18n="lbl_best">Best</div><div class="score-val" id="best">0</div></div>
+  </div>
+
+  <div class="ctrl-row">
+    <button class="btn" onclick="startGame()" data-i18n="btn_new_game">▶ New Game</button>
+  </div>
+
+  <div id="canvas-wrap">
+    <canvas id="canvas" width="480" height="480"></canvas>
+    <div id="overlay" class="show">
+      <h2 data-i18n="gbrick_ov_title">🧱 Brick Breaker</h2>
+      <p data-i18n="gbrick_ov_p">Move your mouse or touch the screen to control the paddle. Don't let the ball fall!</p>
+      <button class="btn" onclick="startGame()" data-i18n="btn_play_now">▶ Play Now</button>
+    </div>
+  </div>
+
+  <div class="how-to">
+    <h2 data-i18n="gbrick_how_title">📖 How to Play</h2>
+    <ul>
+      <li><span>🖱️</span><span data-i18n="gbrick_h1"><strong>Move the mouse</strong> or <strong>touch/drag</strong> on mobile to control the paddle.</span></li>
+      <li><span>⚽</span><span data-i18n="gbrick_h2">Keep the ball bouncing off the paddle to destroy bricks.</span></li>
+      <li><span>💎</span><span data-i18n="gbrick_h3"><strong>Colored bricks</strong> may need multiple hits — darker bricks are tougher.</span></li>
+      <li><span>⬇️</span><span data-i18n="gbrick_h4">If the ball falls below the paddle, you lose a life. Three lives total!</span></li>
+      <li><span>🔓</span><span data-i18n="gbrick_h5">Clear all bricks to advance to the next level. Speed increases each level!</span></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <a href="/" data-i18n="footer_home">← Back to WitLab</a> &nbsp;|&nbsp; <a href="/about.html" data-i18n="footer_about">About</a> &nbsp;|&nbsp; <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy</a>
+</footer>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+// Game objects
+let paddle, ball, bricks, score, lives, level, best=0, running=false, animId;
+const PADDLE_H=12, BALL_R=8;
+const ROWS=5, COLS=8;
+const BRICK_W=Math.floor((W-40)/COLS)-6, BRICK_H=20;
+const BRICK_PAD=6, BRICK_LEFT=20;
+
+const BRICK_COLORS=[
+  ['#ff5252','#cc2222'],['#ff9800','#cc6600'],['#ffcc02','#cc9900'],
+  ['#69ff47','#3a9920'],['#00e5ff','#0099bb']
+];
+
+function buildBricks(lvl) {
+  bricks=[];
+  for(let r=0;r<ROWS;r++) {
+    for(let c=0;c<COLS;c++) {
+      const hp = r<2 ? 1 : r<4 ? 2 : 3;
+      bricks.push({
+        x: BRICK_LEFT+c*(BRICK_W+BRICK_PAD),
+        y: 50+r*(BRICK_H+BRICK_PAD),
+        w:BRICK_W, h:BRICK_H,
+        hp, maxHp:hp,
+        color:BRICK_COLORS[r%BRICK_COLORS.length],
+        alive:true
+      });
+    }
+  }
+}
+
+function startGame(nextLvl=false) {
+  document.getElementById('overlay').classList.remove('show');
+  if(!nextLvl){ score=0; lives=3; level=1; }
+  paddle={x:W/2-50,y:H-30,w:100,h:PADDLE_H};
+  const spd=3+level*0.4;
+  const angle=(Math.random()*0.8+0.1)*Math.PI;
+  ball={x:W/2,y:H-50,vx:Math.cos(angle)*spd,vy:-Math.abs(Math.sin(angle)*spd)};
+  buildBricks(level);
+  running=true;
+  if(animId) cancelAnimationFrame(animId);
+  loop();
+}
+
+function loop(){
+  if(!running){animId=null;return;}
+  update(); draw();
+  animId=requestAnimationFrame(loop);
+}
+
+function update(){
+  ball.x+=ball.vx; ball.y+=ball.vy;
+  // walls
+  if(ball.x-BALL_R<=0){ball.x=BALL_R;ball.vx=Math.abs(ball.vx);}
+  if(ball.x+BALL_R>=W){ball.x=W-BALL_R;ball.vx=-Math.abs(ball.vx);}
+  if(ball.y-BALL_R<=0){ball.y=BALL_R;ball.vy=Math.abs(ball.vy);}
+  // bottom
+  if(ball.y+BALL_R>=H){ loseLife(); return; }
+  // paddle
+  if(ball.y+BALL_R>=paddle.y && ball.y-BALL_R<=paddle.y+PADDLE_H &&
+     ball.x>=paddle.x && ball.x<=paddle.x+paddle.w) {
+    ball.vy=-Math.abs(ball.vy);
+    const rel=(ball.x-(paddle.x+paddle.w/2))/(paddle.w/2);
+    ball.vx = rel*4.5;
+    ball.y=paddle.y-BALL_R;
+  }
+  // bricks
+  for(let b of bricks){
+    if(!b.alive) continue;
+    if(ball.x+BALL_R>b.x && ball.x-BALL_R<b.x+b.w &&
+       ball.y+BALL_R>b.y && ball.y-BALL_R<b.y+b.h){
+      b.hp--;
+      if(b.hp<=0){ b.alive=false; score+=10*b.maxHp; }
+      // reflect
+      const fromLeft=ball.x<b.x||ball.x>b.x+b.w;
+      if(fromLeft) ball.vx=-ball.vx; else ball.vy=-ball.vy;
+      break;
+    }
+  }
+  if(score>best) best=score;
+  // check win
+  if(bricks.every(b=>!b.alive)){
+    running=false; level++;
+    setTimeout(()=>{
+      const ov=document.getElementById('overlay');
+      ov.querySelector('h2').textContent='🎉 Level Clear!';
+      ov.querySelector('p').textContent=`Score: ${score} | Starting Level ${level}…`;
+      ov.classList.add('show');
+      setTimeout(()=>startGame(true),2000);
+    },300);
+  }
+  updateUI();
+}
+
+function loseLife(){
+  lives--;
+  ball={x:W/2,y:H-50,vx:(Math.random()>0.5?1:-1)*3,vy:-3};
+  if(lives<=0){
+    running=false;
+    const ov=document.getElementById('overlay');
+    ov.querySelector('h2').textContent='💀 Game Over';
+    ov.querySelector('p').textContent=`Score: ${score} | Level: ${level}`;
+    ov.classList.add('show');
+  }
+  updateUI();
+}
+
+function updateUI(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('level').textContent=level;
+  document.getElementById('lives').textContent='❤️'.repeat(lives);
+  document.getElementById('best').textContent=best;
+}
+
+function draw(){
+  ctx.fillStyle='#0f0f24'; ctx.fillRect(0,0,W,H);
+  // bricks
+  for(let b of bricks){
+    if(!b.alive) continue;
+    const alpha=0.4+0.6*(b.hp/b.maxHp);
+    ctx.globalAlpha=alpha;
+    ctx.fillStyle=b.color[0];
+    ctx.beginPath(); ctx.roundRect(b.x,b.y,b.w,b.h,4); ctx.fill();
+    ctx.fillStyle=b.color[1];
+    ctx.fillRect(b.x,b.y+b.h-3,b.w,3);
+    // HP pips
+    if(b.maxHp>1){
+      ctx.globalAlpha=1;
+      for(let i=0;i<b.hp;i++){
+        ctx.fillStyle='rgba(255,255,255,0.6)';
+        ctx.beginPath(); ctx.arc(b.x+6+i*8,b.y+b.h/2,2,0,Math.PI*2); ctx.fill();
+      }
+    }
+    ctx.globalAlpha=1;
+  }
+  // paddle
+  const pg=ctx.createLinearGradient(paddle.x,paddle.y,paddle.x,paddle.y+PADDLE_H);
+  pg.addColorStop(0,'#ff7777'); pg.addColorStop(1,'#cc2222');
+  ctx.fillStyle=pg;
+  ctx.beginPath(); ctx.roundRect(paddle.x,paddle.y,paddle.w,PADDLE_H,6); ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,0.25)';
+  ctx.fillRect(paddle.x+4,paddle.y+2,paddle.w-8,3);
+  // ball
+  const bg=ctx.createRadialGradient(ball.x-2,ball.y-2,1,ball.x,ball.y,BALL_R);
+  bg.addColorStop(0,'#ffffff'); bg.addColorStop(0.5,'#ffcc44'); bg.addColorStop(1,'#ff6600');
+  ctx.fillStyle=bg;
+  ctx.beginPath(); ctx.arc(ball.x,ball.y,BALL_R,0,Math.PI*2); ctx.fill();
+  // glow
+  ctx.shadowColor='#ffaa00'; ctx.shadowBlur=12;
+  ctx.beginPath(); ctx.arc(ball.x,ball.y,BALL_R,0,Math.PI*2); ctx.fill();
+  ctx.shadowBlur=0;
+}
+
+// Mouse
+canvas.addEventListener('mousemove',e=>{
+  const rect=canvas.getBoundingClientRect();
+  const scaleX=W/rect.width;
+  const mx=(e.clientX-rect.left)*scaleX;
+  paddle.x=mx-paddle.w/2;
+  paddle.x=Math.max(0,Math.min(W-paddle.w,paddle.x));
+});
+
+// Touch
+canvas.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  const rect=canvas.getBoundingClientRect();
+  const scaleX=W/rect.width;
+  const mx=(e.touches[0].clientX-rect.left)*scaleX;
+  paddle.x=mx-paddle.w/2;
+  paddle.x=Math.max(0,Math.min(W-paddle.w,paddle.x));
+},{passive:false});
+
+draw();
+</script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play Power Clicker online for free. Click to generate power, buy upgrades, and build your galactic empire. An addictive idle clicker game in your browser.">
+  <title>Power Clicker – Idle Game | WitLab</title>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0d0d1a; --surface:#13132a; --card:#1a1a35; --card2:#1e1e42;
+      --border:#2a2a55; --accent:#7c4dff; --accent2:#00e5ff;
+      --text:#e8e8ff; --text-muted:#9999cc; --radius:12px;
+    }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { background:rgba(13,13,26,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-inner { max-width:1100px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; gap:12px; }
+    .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(135deg,#00e5ff,#7c4dff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .back { color:var(--text-muted); text-decoration:none; font-size:.9rem; }
+    .back:hover { color:var(--accent2); }
+
+    .game-wrap { max-width:1000px; margin:0 auto; padding:24px 16px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+    @media(max-width:640px){ .game-wrap{grid-template-columns:1fr;} }
+
+    /* ── LEFT PANEL ── */
+    .left-panel { display:flex; flex-direction:column; gap:16px; }
+    .stat-bar { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; text-align:center; }
+    .stat-bar h2 { font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; }
+    #power-display { font-size:2.2rem; font-weight:900; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.2; word-break:break-all; }
+    .sub-stats { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+    .sub-stat { background:var(--card2); border:1px solid var(--border); border-radius:8px; padding:6px 12px; text-align:center; }
+    .sub-stat-label { font-size:.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
+    .sub-stat-val { font-size:.95rem; font-weight:700; color:var(--accent2); }
+
+    /* Click button */
+    .click-area { display:flex; flex-direction:column; align-items:center; gap:12px; }
+    #clicker-btn {
+      width:160px; height:160px; border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, #a97aff, #4a1dcc);
+      border:4px solid rgba(124,77,255,.6);
+      font-size:4rem; cursor:pointer;
+      box-shadow:0 0 30px rgba(124,77,255,.4),inset 0 -6px 12px rgba(0,0,0,.4);
+      transition:transform .08s, box-shadow .08s;
+      -webkit-tap-highlight-color:transparent;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #clicker-btn:active { transform:scale(.93); box-shadow:0 0 16px rgba(124,77,255,.3); }
+    .click-label { font-size:.85rem; color:var(--text-muted); }
+
+    /* Prestige */
+    .prestige-row { display:flex; gap:8px; justify-content:center; }
+    .btn-prestige { background:linear-gradient(135deg,#cc9900,#886600); border:none; border-radius:8px; color:#fff; font-size:.8rem; font-weight:700; cursor:pointer; padding:9px 18px; opacity:.6; pointer-events:none; transition:all .2s; }
+    .btn-prestige.ready { opacity:1; pointer-events:auto; animation:pulse2 1s ease infinite; }
+    @keyframes pulse2 { 0%,100%{box-shadow:0 0 0 0 rgba(255,183,0,.4)}50%{box-shadow:0 0 0 8px rgba(255,183,0,0)} }
+    .prestige-val { font-size:.75rem; color:var(--text-muted); text-align:center; }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel { display:flex; flex-direction:column; gap:14px; }
+    .panel-title { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--text-muted); margin-bottom:-4px; }
+    .upgrade-card {
+      background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+      padding:14px 16px; display:flex; align-items:center; gap:14px;
+      cursor:pointer; transition:all .15s;
+    }
+    .upgrade-card:hover:not(.disabled) { border-color:var(--accent); background:#22224a; transform:translateX(2px); }
+    .upgrade-card.disabled { opacity:.4; cursor:not-allowed; }
+    .upgrade-card.maxed { opacity:.35; cursor:default; border-color:#333; }
+    .upg-icon { font-size:1.8rem; flex-shrink:0; }
+    .upg-info { flex:1; }
+    .upg-name { font-size:.92rem; font-weight:700; }
+    .upg-desc { font-size:.75rem; color:var(--text-muted); margin-top:2px; }
+    .upg-right { text-align:right; flex-shrink:0; }
+    .upg-cost { font-size:.85rem; font-weight:700; color:var(--accent); }
+    .upg-owned { font-size:.72rem; color:var(--text-muted); margin-top:2px; }
+    .progress-bar { height:3px; background:var(--border); border-radius:2px; margin-top:6px; overflow:hidden; }
+    .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:2px; transition:width .3s; }
+
+    /* Milestone */
+    .milestone-section { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+    .milestone-section h3 { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:10px; }
+    .milestone { display:flex; align-items:center; gap:10px; margin-bottom:8px; font-size:.82rem; }
+    .milestone-icon { font-size:1rem; flex-shrink:0; }
+    .milestone-text { flex:1; color:var(--text-muted); }
+    .milestone.done .milestone-text { color:var(--text); }
+    .milestone-check { font-size:.85rem; }
+
+    .how-to { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; }
+    .how-to h2 { font-size:.95rem; font-weight:700; margin-bottom:10px; }
+    .how-to ul { list-style:none; display:flex; flex-direction:column; gap:6px; }
+    .how-to li { display:flex; gap:9px; font-size:.83rem; color:var(--text-muted); }
+
+    footer { text-align:center; padding:24px 16px; color:var(--text-muted); font-size:.8rem; }
+    footer a { color:var(--text-muted); text-decoration:none; }
+    footer a:hover { color:var(--accent); }
+    .float-text { position:fixed; pointer-events:none; font-weight:800; font-size:1rem; color:#7c4dff; text-shadow:0 0 8px rgba(124,77,255,.8); opacity:1; transition:opacity .8s, transform .8s; z-index:999; }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">WitLab</a>
+    <a class="back" href="/" data-i18n="nav_back">← All Games</a>
+  </div>
+</nav>
+
+<div class="game-wrap">
+  <!-- LEFT -->
+  <div class="left-panel">
+    <div class="stat-bar">
+      <h2 data-i18n="gclick_total_power">Total Power</h2>
+      <div id="power-display">0</div>
+      <div class="sub-stats">
+        <div class="sub-stat"><div class="sub-stat-label" data-i18n="gclick_per_click">Per Click</div><div class="sub-stat-val" id="cps">1</div></div>
+        <div class="sub-stat"><div class="sub-stat-label" data-i18n="gclick_per_sec">Per Second</div><div class="sub-stat-val" id="pps">0</div></div>
+        <div class="sub-stat"><div class="sub-stat-label" data-i18n="gclick_all_time">All Time</div><div class="sub-stat-val" id="total">0</div></div>
+        <div class="sub-stat"><div class="sub-stat-label" data-i18n="gclick_prestige">Prestige</div><div class="sub-stat-val" id="prestige-lv">⭐×1</div></div>
+      </div>
+    </div>
+
+    <div class="click-area">
+      <button id="clicker-btn" onclick="doClick(event)">⚡</button>
+      <span class="click-label" data-i18n="gclick_click_label">Click to generate power!</span>
+    </div>
+
+    <div>
+      <div class="prestige-row">
+        <button class="btn-prestige" id="prestige-btn" onclick="prestige()" data-i18n="gclick_prestige_btn">⭐ Prestige (1B needed)</button>
+      </div>
+      <div class="prestige-val" id="prestige-desc" data-i18n="gclick_prestige_desc">Reset for a permanent ×1.5 multiplier</div>
+    </div>
+
+    <div class="milestone-section">
+      <h3 data-i18n="gclick_milestones">🏆 Milestones</h3>
+      <div class="milestone" id="m0"><span class="milestone-icon">⚡</span><span class="milestone-text" data-i18n="gclick_m0">Generate 100 power</span><span class="milestone-check">⬜</span></div>
+      <div class="milestone" id="m1"><span class="milestone-icon">🔧</span><span class="milestone-text" data-i18n="gclick_m1">Buy first upgrade</span><span class="milestone-check">⬜</span></div>
+      <div class="milestone" id="m2"><span class="milestone-icon">🚀</span><span class="milestone-text" data-i18n="gclick_m2">Reach 1,000 power</span><span class="milestone-check">⬜</span></div>
+      <div class="milestone" id="m3"><span class="milestone-icon">🌟</span><span class="milestone-text" data-i18n="gclick_m3">Earn 10,000 power total</span><span class="milestone-check">⬜</span></div>
+      <div class="milestone" id="m4"><span class="milestone-icon">🌙</span><span class="milestone-text" data-i18n="gclick_m4">Reach 1M power</span><span class="milestone-check">⬜</span></div>
+      <div class="milestone" id="m5"><span class="milestone-icon">✨</span><span class="milestone-text" data-i18n="gclick_m5">Prestige for the first time</span><span class="milestone-check">⬜</span></div>
+    </div>
+
+    <div class="how-to">
+      <h2 data-i18n="gclick_how_title">📖 How to Play</h2>
+      <ul>
+        <li><span>⚡</span><span data-i18n="gclick_h1">Click the big button to generate Power.</span></li>
+        <li><span>🛒</span><span data-i18n="gclick_h2">Spend power on upgrades to earn more automatically.</span></li>
+        <li><span>📈</span><span data-i18n="gclick_h3">Each upgrade increases your Power Per Second or Per Click.</span></li>
+        <li><span>⭐</span><span data-i18n="gclick_h4">Prestige when you hit 1B to restart with a permanent multiplier!</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-panel">
+    <div class="panel-title" data-i18n="gclick_upgrades">⚙️ Upgrades</div>
+    <div id="upgrades-container"></div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" data-i18n="footer_home">← Back to WitLab</a> &nbsp;|&nbsp; <a href="/about.html" data-i18n="footer_about">About</a> &nbsp;|&nbsp; <a href="/privacy-policy.html" data-i18n="footer_privacy">Privacy</a>
+</footer>
+
+<script>
+// ── Game state
+let power=0, totalEarned=0, prestigeLevel=1, prestigeCount=0;
+let clickPower=1;
+let boughtAny=false;
+
+const UPGRADES=[
+  {id:0,icon:'🔋',name:'Energy Cell',desc:'A basic capacitor. +2/click',baseCost:10,cpc:2,pps:0,max:20},
+  {id:1,icon:'🔌',name:'Power Cable',desc:'Steady trickle. +0.5 power/sec',baseCost:50,cpc:0,pps:0.5,max:30},
+  {id:2,icon:'⚡',name:'Tesla Coil',desc:'More spark! +5/click',baseCost:200,cpc:5,pps:0,max:20},
+  {id:3,icon:'💡',name:'Solar Array',desc:'Passive energy. +2/sec',baseCost:500,cpc:0,pps:2,max:25},
+  {id:4,icon:'🔥',name:'Fusion Core',desc:'Massive boost! +20/click',baseCost:2000,cpc:20,pps:0,max:15},
+  {id:5,icon:'🌊',name:'Hydro Plant',desc:'Constant flow. +10/sec',baseCost:5000,cpc:0,pps:10,max:20},
+  {id:6,icon:'☢️',name:'Reactor',desc:'Nuclear power! +50/click',baseCost:20000,cpc:50,pps:0,max:10},
+  {id:7,icon:'🌙',name:'Dark Matter',desc:'Reality fuel. +50/sec',baseCost:80000,cpc:0,pps:50,max:15},
+  {id:8,icon:'🚀',name:'Ion Drive',desc:'Space power! +200/click',baseCost:500000,cpc:200,pps:0,max:10},
+  {id:9,icon:'🌌',name:'Dyson Sphere',desc:'Star-size power. +500/sec',baseCost:5000000,cpc:0,pps:500,max:10},
+];
+
+let owned=UPGRADES.map(()=>0);
+
+function cost(upg){ return Math.floor(upg.baseCost * Math.pow(1.15, owned[upg.id])); }
+function totalPPS(){ return UPGRADES.reduce((s,u)=>s+owned[u.id]*u.pps,0)*prestigeLevel; }
+function totalCPC(){ return (1+UPGRADES.reduce((s,u)=>s+owned[u.id]*u.cpc,0))*prestigeLevel; }
+
+function buildUpgradeUI(){
+  const c=document.getElementById('upgrades-container');
+  c.innerHTML='';
+  UPGRADES.forEach(upg=>{
+    const div=document.createElement('div');
+    div.className='upgrade-card'+(owned[upg.id]>=upg.max?' maxed':power<cost(upg)?' disabled':'');
+    div.id='upg-'+upg.id;
+    const pct=Math.min(100,Math.round((owned[upg.id]/upg.max)*100));
+    div.innerHTML=`
+      <div class="upg-icon">${upg.icon}</div>
+      <div class="upg-info">
+        <div class="upg-name">${upg.name}</div>
+        <div class="upg-desc">${upg.desc}</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="upg-right">
+        <div class="upg-cost">${owned[upg.id]>=upg.max?'MAX':fmt(cost(upg))+'⚡'}</div>
+        <div class="upg-owned">${owned[upg.id]}/${upg.max}</div>
+      </div>`;
+    if(owned[upg.id]<upg.max) div.onclick=()=>buy(upg.id);
+    c.appendChild(div);
+  });
+}
+
+function buy(id){
+  const upg=UPGRADES[id];
+  const c=cost(upg);
+  if(power<c||owned[id]>=upg.max) return;
+  power-=c;
+  owned[id]++;
+  if(!boughtAny){boughtAny=true;checkMilestone(1);}
+  clickPower=totalCPC();
+  buildUpgradeUI(); updateUI();
+}
+
+function doClick(e){
+  power+=clickPower; totalEarned+=clickPower;
+  spawnFloat(e, '+'+fmt(clickPower));
+  updateUI(); checkMilestones();
+}
+
+function spawnFloat(e,text){
+  const el=document.createElement('div');
+  el.className='float-text'; el.textContent=text;
+  el.style.left=(e.clientX-20)+'px'; el.style.top=(e.clientY-10)+'px';
+  document.body.appendChild(el);
+  requestAnimationFrame(()=>{ el.style.transform='translateY(-60px)'; el.style.opacity='0'; });
+  setTimeout(()=>el.remove(),850);
+}
+
+function prestige(){
+  if(power<1e9) return;
+  power=0; totalEarned=0; owned=UPGRADES.map(()=>0);
+  prestigeCount++; prestigeLevel=Math.pow(1.5,prestigeCount);
+  clickPower=totalCPC(); boughtAny=false;
+  buildUpgradeUI(); updateUI();
+  checkMilestone(5);
+  document.getElementById('prestige-desc').textContent=`Prestige ×${prestigeCount} active — Multiplier: ×${prestigeLevel.toFixed(2)}`;
+}
+
+function fmt(n){
+  if(n>=1e18) return (n/1e18).toFixed(1)+'Qi';
+  if(n>=1e15) return (n/1e15).toFixed(1)+'Q';
+  if(n>=1e12) return (n/1e12).toFixed(1)+'T';
+  if(n>=1e9)  return (n/1e9).toFixed(1)+'B';
+  if(n>=1e6)  return (n/1e6).toFixed(1)+'M';
+  if(n>=1e3)  return (n/1e3).toFixed(1)+'K';
+  return Math.floor(n).toString();
+}
+
+function updateUI(){
+  document.getElementById('power-display').textContent=fmt(power)+'⚡';
+  document.getElementById('cps').textContent=fmt(totalCPC());
+  document.getElementById('pps').textContent=fmt(totalPPS())+'/s';
+  document.getElementById('total').textContent=fmt(totalEarned);
+  document.getElementById('prestige-lv').textContent='⭐×'+prestigeLevel.toFixed(2);
+  const pbtn=document.getElementById('prestige-btn');
+  if(power>=1e9){ pbtn.classList.add('ready'); }else{ pbtn.classList.remove('ready'); }
+  // refresh upgrade disabled states without rebuild
+  UPGRADES.forEach(upg=>{
+    const el=document.getElementById('upg-'+upg.id);
+    if(!el) return;
+    if(owned[upg.id]>=upg.max) return;
+    if(power>=cost(upg)) el.classList.remove('disabled'); else el.classList.add('disabled');
+  });
+}
+
+// Milestones
+const MS=[{val:100,type:'power'},{val:1,type:'buy'},{val:1000,type:'power'},{val:10000,type:'total'},{val:1e6,type:'power'},{val:1,type:'prestige'}];
+const mDone=Array(6).fill(false);
+function checkMilestones(){
+  checkMilestone(0, power>=100);
+  checkMilestone(2, power>=1000);
+  checkMilestone(3, totalEarned>=10000);
+  checkMilestone(4, power>=1e6);
+}
+function checkMilestone(i, cond=true){
+  if(mDone[i]||!cond) return;
+  mDone[i]=true;
+  const el=document.getElementById('m'+i);
+  el.classList.add('done');
+  el.querySelector('.milestone-check').textContent='✅';
+}
+
+// Auto-tick
+setInterval(()=>{
+  const pps=totalPPS();
+  if(pps>0){
+    const gain=pps/20;
+    power+=gain; totalEarned+=gain;
+    updateUI(); checkMilestones();
+  }
+},50);
+
+buildUpgradeUI(); updateUI();
+</script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

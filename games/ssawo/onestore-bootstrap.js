@@ -1,7 +1,7 @@
 import { createOnestoreHost } from './onestore-host.js';
 
 const sdkUrl = 'https://h5sdk.onestore.net/lib/v1.1.0/onestore-h5-sdk.min.js';
-const gameEntry = './assets/index-BwMD5HOS.js';
+const gameEntry = './assets/index-BK6NnK3-.js';
 const errorPanel = document.createElement('div');
 errorPanel.id = 'onestore-connection-error';
 errorPanel.setAttribute('role', 'alert');

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#182e25"><title>WILDBLADE — 무기와 모험</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%2320382b'/%3E%3Ctext x='6' y='29' font-size='28' fill='%23e8c784'%3E⚔%3C/text%3E%3C/svg%3E">  <script type="module" crossorigin src="./assets/index-DcyqiC3_.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C6eLJmhB.css">
+</head><body>
+<main id="game-frame">
+ <canvas id="game" tabindex="0" aria-label="와일드블레이드 RPG. WASD 이동, 자동 공격과 무기 패시브. 건물과 상자는 가까이 가면 자동 작동합니다."></canvas><div class="vignette"></div>
+ <div class="hero-hud glass"><div class="portrait"><canvas id="portrait" width="72" height="72"></canvas><b id="level-badge">1</b></div><div class="hero-bars"><div class="hero-label"><strong>숲의 방랑자</strong><span id="level-label">LV. 1</span></div><div class="bar health"><div id="health-fill"></div><span id="health-text">100 / 100</span></div><div class="bar xp"><div id="xp-fill"></div></div></div></div>
+ <div class="world-title"><small>모험 지역</small><h1 id="area-title">초록빛 숲</h1><span id="zone-tag">마을 · 전투 금지</span></div>
+ <div class="top-right"><div class="economy glass"><div class="bank-counter"><span>G</span><div><small>골드</small><b id="gold">0</b></div></div><div class="gem-counter"><span>◆</span><div><small>보스 보석</small><b id="gems">0</b></div></div></div><div class="utility"><button id="sound" aria-label="소리 켜기" title="소리 켜기">♪</button><button id="help" aria-label="도움말">?</button><button id="pause" aria-label="일시정지">Ⅱ</button></div></div>
+ <div id="boss-hud" class="boss-hud hidden"><div><span id="boss-name">고대 숲의 수호자</span><b id="boss-hp">100%</b></div><div class="bar"><div id="boss-fill"></div></div><small id="boss-pattern">잠든 숲의 힘</small></div>
+ <div class="location-toast" id="location-toast"></div><div class="toast" id="toast" role="status"></div>
+ <div id="proximity" class="proximity hidden"></div>
+ <div class="minimap-wrap glass"><canvas id="minimap" width="150" height="76"></canvas><small id="map-label">초록빛 숲</small></div>
+ <div class="joystick" id="joystick"><div></div></div>
+ <div class="bottom-tools"><button id="return-camp" class="tool-button glass"><span>⌂</span><div>마을 귀환</div></button><button id="open-upgrades" class="tool-button upgrade-launch"><canvas data-pixel-icon="power" width="40" height="40"></canvas><div>장비 / 강화</div><kbd>U</kbd></button></div>
+ <div class="skill-bar"><div class="passive-hud glass"><small>자동 패시브</small><strong id="passive-name">연속 베기</strong><div class="bar"><div id="passive-fill"></div></div><span id="passive-note"></span></div></div>
+ <div class="micro-guide"><span id="saving">● 자동 저장</span></div>
+ <aside id="upgrade-panel" class="upgrade-panel hidden" aria-label="상시 강화 메뉴"><div class="panel-top"><div><h2>장비와 성장</h2></div><div class="panel-wallet"><b id="spendable-gold">0G</b></div><button id="close-upgrades" aria-label="강화 메뉴 닫기">×</button></div><div id="upgrade-content"></div></aside>
+ <div id="modal-layer" class="modal-layer hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title"></div>
+ <div id="start-screen" class="start-screen"><div class="start-emblem">W</div><div class="eyebrow">숲의 방랑자</div><h2>WILD<span>BLADE</span></h2><p>검을 들고, 다시 숲으로.</p><div class="intro-pills"><span>7종 근접 무기</span><span>10등급 합성</span><span>21개 마을 · 63개 사냥터</span></div><button id="start" class="primary">모험 시작하기</button><small>마을 → 사냥터 1 · 2 · 3 → 다음 마을</small><div id="asset-status">장비 준비 중</div><button id="reset" class="text-button">새 모험으로 초기화</button></div>
+</main></body></html>

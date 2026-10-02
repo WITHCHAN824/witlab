@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/games/wildblade/:path*",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://*.onestore.co.kr https://*.onestore.net"
+        }
+      ]
+    }
+  ]
+}

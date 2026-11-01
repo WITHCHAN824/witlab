@@ -1,0 +1,462 @@
+[
+  {
+    "slug": "takgu-god",
+    "name": "탁구의 신",
+    "summary": "공을 받아 넘기며 랠리를 이어가는 탁구 게임",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/takgu-god",
+    "icon": "/assets/withchan/takgu-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/94f25ba7-29cf-4570-a15f-0c6745d666b4.png",
+      "https://static.toss.im/appsintoss/7057/5cd2708f-392e-498c-bfb6-32ba0912426e.png",
+      "https://static.toss.im/appsintoss/7057/ffe643ad-383d-4401-bfc2-9c3b232eeea0.png",
+      "https://static.toss.im/appsintoss/7057/3dbe53db-ff40-480c-a1f4-cc9790c6d1c4.png",
+      "https://static.toss.im/appsintoss/7057/5223068a-91af-4011-8af7-24885e45d3e5.png",
+      "",
+      ""
+    ]
+  },
+  {
+    "slug": "driving-god",
+    "name": "운전의 신",
+    "summary": "차 사이를 지나며 추월하는 운전 게임",
+    "category": "레이싱",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/driving-god",
+    "icon": "/assets/withchan/driving-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/a21dc024-3867-4783-b831-74f5d864e190.png",
+      "https://static.toss.im/appsintoss/7057/b570b387-9180-4eea-a286-9c567c5677a1.png",
+      "https://static.toss.im/appsintoss/7057/dad74269-3168-4ad8-b720-9135293d7b79.png",
+      "https://static.toss.im/appsintoss/7057/bdde7c85-c807-4766-aa83-5d68111437b8.png",
+      "https://static.toss.im/appsintoss/7057/85be8e03-d638-4c6c-a56f-c5cc34b397c2.png",
+      "",
+      "",
+      ""
+    ]
+  },
+  {
+    "slug": "archery-god",
+    "name": "양궁의 신",
+    "summary": "활을 쏴서 과녁을 맞히는 양궁 게임",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/archery-god",
+    "icon": "/assets/withchan/archery-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-db11e9c1-7339-4037-bc55-014166bd79bb.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-0589adeb-56eb-4771-b401-90448c3a7bc8.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-4277b9f6-cfe4-456a-8a2e-22fa67f222a9.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-e721c16c-10c7-4691-afa7-e90d554d62d4.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-96592d3a-8093-4f15-a23b-ad2b76dc0d35.png",
+      ""
+    ]
+  },
+  {
+    "slug": "swingreplay",
+    "name": "골프 스윙 리플레이",
+    "summary": "골프 스윙을 촬영하고 다시 보는 앱",
+    "category": "건강",
+    "group": "다른 앱",
+    "age": "",
+    "url": "https://tossminiapp.com/d/swingreplay",
+    "icon": "/assets/withchan/swingreplay.png",
+    "previews": []
+  },
+  {
+    "slug": "cafemoment",
+    "name": "나의 작은 카페",
+    "summary": "내 카페를 운영하는 게임",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/cafemoment",
+    "icon": "/assets/withchan/cafemoment.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/fa2dee4e-fbb4-4807-94bb-70f95eb99c1a.png",
+      "https://static.toss.im/appsintoss/7057/9736336b-a272-4110-b1e9-649e5abfd0a7.png",
+      "https://static.toss.im/appsintoss/7057/10a1fe67-7b37-425d-9bec-6de99a8db344.png"
+    ]
+  },
+  {
+    "slug": "block-puzzle-defense",
+    "name": "블록퍼즐디펜스",
+    "summary": "블록 퍼즐을 풀면서 적을 막는 게임",
+    "category": "전략",
+    "group": "전략·RPG",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/block-puzzle-defense",
+    "icon": "/assets/withchan/block-puzzle-defense.png",
+    "previews": []
+  },
+  {
+    "slug": "scratch-rich",
+    "name": "설거지로 인생역전",
+    "summary": "접시를 닦아 돈을 모으고 집을 키워요",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/scratch-rich",
+    "icon": "/assets/withchan/scratch-rich.png",
+    "previews": []
+  },
+  {
+    "slug": "fishing-rich",
+    "name": "낚시로 인생역전",
+    "summary": "물고기를 잡고 초밥을 팔아 돈을 모아요",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/fishing-rich",
+    "icon": "/assets/withchan/fishing-rich.png",
+    "previews": []
+  },
+  {
+    "slug": "cat-choir",
+    "name": "냥냥 합창단",
+    "summary": "고양이 소리로 음악을 만드는 앱",
+    "category": "콘텐츠",
+    "group": "음악·힐링",
+    "age": "",
+    "url": "https://tossminiapp.com/d/cat-choir",
+    "icon": "/assets/withchan/cat-choir.png",
+    "previews": []
+  },
+  {
+    "slug": "number-path",
+    "name": "넘버 패스",
+    "summary": "숫자를 이어 길을 만드는 퍼즐",
+    "category": "퍼즐",
+    "group": "퍼즐",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/number-path",
+    "icon": "/assets/withchan/number-path.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/e3a1cf42-bab3-4854-9c09-606cd98017d0.png",
+      "https://static.toss.im/appsintoss/7057/e976f696-4013-4ac2-93b1-d8659942df07.png",
+      "https://static.toss.im/appsintoss/7057/915df964-041b-493c-b000-3d7b594d67e5.png"
+    ]
+  },
+  {
+    "slug": "merge-blade-defense",
+    "name": "머지 블레이드",
+    "summary": "칼날을 합치고 적을 막는 디펜스 게임",
+    "category": "전략",
+    "group": "전략·RPG",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/merge-blade-defense",
+    "icon": "/assets/withchan/merge-blade-defense.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/b5ace004-b71f-4e35-ba62-813cb2505fe8.jpg",
+      "https://static.toss.im/appsintoss/7057/9ce0f647-e2b4-46b8-97b6-4e451ae9eb48.jpg",
+      "https://static.toss.im/appsintoss/7057/323ee042-6ab4-4b71-a68d-7314cbc8e203.jpg"
+    ]
+  },
+  {
+    "slug": "kimbap-rich",
+    "name": "김밥 말아 인생역전",
+    "summary": "김밥을 팔아 가게와 집을 키워요",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/kimbap-rich",
+    "icon": "/assets/withchan/kimbap-rich.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/80fcccff-9be4-4569-a498-e8e9b31b17fc.png",
+      "https://static.toss.im/appsintoss/7057/fd319454-4fe0-4481-804a-71e905ceb8f3.png",
+      "https://static.toss.im/appsintoss/7057/58073488-ac0b-4155-b22c-19851dea6f9c.png"
+    ]
+  },
+  {
+    "slug": "romantic-cat-puzzle",
+    "name": "낭만고양이 퍼즐",
+    "summary": "고양이와 물고기가 나오는 로직 퍼즐",
+    "category": "퍼즐",
+    "group": "퍼즐",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/romantic-cat-puzzle",
+    "icon": "/assets/withchan/romantic-cat-puzzle.png",
+    "previews": []
+  },
+  {
+    "slug": "dig-to-riches",
+    "name": "땅파서 인생역전",
+    "summary": "땅을 파고 자원을 모으며 성장해요",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/dig-to-riches",
+    "icon": "/assets/withchan/dig-to-riches.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/e2c86255-10ec-4874-bd83-95ce453d8c77.png",
+      "https://static.toss.im/appsintoss/7057/5bad94e6-346a-43f7-8645-2693276f62be.png",
+      "https://static.toss.im/appsintoss/7057/d4f6e50a-7b84-45de-b050-3f2de05a2871.png"
+    ]
+  },
+  {
+    "slug": "chagok-cozy-tidy",
+    "name": "차곡: 정리의시간",
+    "summary": "물건을 제자리에 맞춰 정리하는 퍼즐",
+    "category": "퍼즐",
+    "group": "퍼즐",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/chagok-cozy-tidy",
+    "icon": "/assets/withchan/chagok-cozy-tidy.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/924d509d-83c9-42db-a28a-602809d830b9.png",
+      "https://static.toss.im/appsintoss/7057/2dc5bd02-ce96-4744-b054-e456f2fe48d4.png",
+      "https://static.toss.im/appsintoss/7057/3363cc95-c2aa-4861-be6f-452ffb58ab09.png"
+    ]
+  },
+  {
+    "slug": "snake-blade-defense",
+    "name": "스네이크 블레이드",
+    "summary": "합체하며 적을 막는 디펜스 게임",
+    "category": "전략",
+    "group": "전략·RPG",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/snake-blade-defense",
+    "icon": "/assets/withchan/snake-blade-defense.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/83c76057-1ca2-4c99-a87c-3177040a4e6b.png",
+      "https://static.toss.im/appsintoss/7057/542646d5-75dc-419d-9e00-b440cbd2e566.png",
+      "https://static.toss.im/appsintoss/7057/83e80eb6-510e-4a55-b79c-48f12ecf8b04.png"
+    ]
+  },
+  {
+    "slug": "museum-rescue",
+    "name": "미술관이 망했다",
+    "summary": "직접 그린 그림을 미술관에 전시해요",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/museum-rescue",
+    "icon": "/assets/withchan/museum-rescue.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/77c84bc5-4032-4f03-94e3-9ce5508a9d20.png",
+      "https://static.toss.im/appsintoss/7057/a27de6db-e72c-4fc8-8474-be4e7764f7d3.png",
+      "https://static.toss.im/appsintoss/7057/8ba9c32b-20b7-4ace-b6b1-f429af543a95.png"
+    ]
+  },
+  {
+    "slug": "tiny-coins-big-life",
+    "name": "티끌모아 인생역전",
+    "summary": "깨고 모으며 돈을 불려가는 게임",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/tiny-coins-big-life",
+    "icon": "/assets/withchan/tiny-coins-big-life.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/392af0c3-9e3a-4b38-b575-febe1cdabfd9.png",
+      "https://static.toss.im/appsintoss/7057/225fc464-06b2-4e81-b9dc-53ae8026bdaa.png",
+      "https://static.toss.im/appsintoss/7057/8059518f-a4f9-46e3-be4d-b3512a38bd17.png"
+    ]
+  },
+  {
+    "slug": "jade-mahjong",
+    "name": "마작 정원",
+    "summary": "같은 패의 짝을 맞추는 마작 퍼즐",
+    "category": "퍼즐",
+    "group": "퍼즐",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/jade-mahjong",
+    "icon": "/assets/withchan/jade-mahjong.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/20d09956-554c-4f64-828c-642318c4bd45.png",
+      "https://static.toss.im/appsintoss/7057/f01fd635-1f44-4161-b198-aab49dc81a54.png",
+      "https://static.toss.im/appsintoss/7057/fe4c514f-fac9-4237-a0e0-b7ec28371dc5.png"
+    ]
+  },
+  {
+    "slug": "ssawo-football",
+    "name": "싸워:오늘 그거 볼 거야",
+    "summary": "내 팀으로 챔피언스리그 우승에 도전해요",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/ssawo-football",
+    "icon": "/assets/withchan/ssawo-football.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-96dd13bb-2e29-482e-adb9-a8096d92733a.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-7ba904f6-9aba-4ff4-9be8-677cac1ee11d.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-f0939d10-1286-46cb-aaa4-55edd170c1a0.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-c79f3594-64c7-4228-ae78-f8e0cd1bdc20.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-b8da466b-8c57-4e2c-85c9-fba672c12d25.png",
+      "",
+      "",
+      ""
+    ]
+  },
+  {
+    "slug": "pitcher-god",
+    "name": "투수의 신",
+    "summary": "한 공씩 던지며 투수를 키우는 야구 게임",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/pitcher-god",
+    "icon": "/assets/withchan/pitcher-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-1fa2a8c7-46a8-47ea-8764-149af643f342.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-6f072851-8e37-4e11-b9e4-cd5823ad1ffa.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-e6d81a97-e4b5-4cba-ae90-8d47c0e6fa8e.png"
+    ]
+  },
+  {
+    "slug": "batter-god",
+    "name": "타자의 신",
+    "summary": "공을 치며 타자를 키우는 야구 게임",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/batter-god",
+    "icon": "/assets/withchan/batter-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-153f24af-0536-4060-b6a4-689d09796fcb.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-21cf2f5b-e783-4422-a47d-59485610ee29.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-8f6655bc-4c4f-49f9-9cab-8193328e9f5f.png"
+    ]
+  },
+  {
+    "slug": "lineout",
+    "name": "라인아웃",
+    "summary": "그림 속 색깔 선을 하나씩 빼는 퍼즐",
+    "category": "퍼즐",
+    "group": "퍼즐",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/lineout",
+    "icon": "/assets/withchan/lineout.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-c2b077d3-7105-48eb-b312-8c930f40a49c.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-94ab9062-4d78-42ae-a1cd-2d7c1e4468db.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-a54f0c8c-7245-4214-a584-871d588357fa.png"
+    ]
+  },
+  {
+    "slug": "just-hunt",
+    "name": "그냥 사냥해",
+    "summary": "뽑고 합치고 사냥하며 성장하는 게임",
+    "category": "RPG",
+    "group": "전략·RPG",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/just-hunt",
+    "icon": "/assets/withchan/just-hunt.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-1acdad1d-8cad-49a7-80f6-7788463c449c.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-995dc578-445d-48e7-932e-0f2a1fd3a76e.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-258a4054-8bed-4951-8cfb-87cd83cec111.png"
+    ]
+  },
+  {
+    "slug": "beat-cut",
+    "name": "비트컷",
+    "summary": "화살표를 따라 베는 리듬 게임",
+    "category": "음악",
+    "group": "음악·힐링",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/beat-cut",
+    "icon": "/assets/withchan/beat-cut.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-3ddb366e-b6dd-42ca-8f1c-5fe6eb48a6ce.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-79179dd1-9ecc-462b-acf6-ae697123cce2.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-1094c2a9-635f-4aef-b178-508680504333.png"
+    ]
+  },
+  {
+    "slug": "bowling-god",
+    "name": "볼링의 신",
+    "summary": "공을 굴려 핀을 쓰러뜨리는 볼링 게임",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/bowling-god",
+    "icon": "/assets/withchan/bowling-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-34927647-ee41-4170-adbf-a605beed79e1.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-f34330b1-5102-41fd-8b96-444afeaf1a84.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-8e76f14b-a0f8-46e8-819d-ab5ea0bb1b36.png"
+    ]
+  },
+  {
+    "slug": "badminton-god",
+    "name": "배드민턴의 신",
+    "summary": "셔틀콕을 주고받는 배드민턴 게임",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/badminton-god",
+    "icon": "/assets/withchan/badminton-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-cba955d6-6007-42c1-81c5-bfb162dbbd7a.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-eb857f8c-9c6d-428e-83e4-06f16492388d.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-749bcfdf-bdf2-4feb-8724-b8de05a65d3e.png"
+    ]
+  },
+  {
+    "slug": "boxing-god",
+    "name": "복싱의 신",
+    "summary": "상대의 주먹을 피하고 때리는 3D 복싱",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "",
+    "url": "https://tossminiapp.com/d/boxing-god",
+    "icon": "/assets/withchan/boxing-god.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-90c1b3ed-3ad9-4523-904e-5c97e72a0967.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-af7222ca-da5f-4b55-a651-754a971f95c9.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-5a7d1359-54b7-4c00-ab82-18584069f16f.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-2e265b64-fbf3-428d-ad07-f2790d56bb49.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-8e62e048-62a5-488b-913a-7c01b3862a55.png"
+    ]
+  },
+  {
+    "slug": "god-of-darts",
+    "name": "다트의 신",
+    "summary": "세 발씩 던지며 리그에 도전하는 다트",
+    "category": "스포츠",
+    "group": "스포츠",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/god-of-darts",
+    "icon": "/assets/withchan/god-of-darts.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-ee298c7e-4c25-4a1a-b5d5-127c0f7d456c.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-f39acef3-f183-46e2-8b26-6284760065d7.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-81763ab6-de8d-4083-8684-e46aa50b33bf.png"
+    ]
+  },
+  {
+    "slug": "little-fresh-mart",
+    "name": "리틀 프레시 마트",
+    "summary": "수확한 물건을 팔며 마트를 키워요",
+    "category": "시뮬레이션",
+    "group": "성장·경영",
+    "age": "전체 이용가",
+    "url": "https://tossminiapp.com/d/little-fresh-mart",
+    "icon": "/assets/withchan/little-fresh-mart.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-8813d09b-a652-44cd-97b9-2ae8b051c46c.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-c5f8f824-3c59-49fa-9283-22c1be4fbc78.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-dbd08e73-4b86-498c-be4f-a625cf81c7b7.png"
+    ]
+  },
+  {
+    "slug": "ember-realm",
+    "name": "엠버 렐름",
+    "summary": "몬스터를 잡고 장비를 모으는 도트 RPG",
+    "category": "RPG",
+    "group": "전략·RPG",
+    "age": "",
+    "url": "https://tossminiapp.com/d/ember-realm",
+    "icon": "/assets/withchan/ember-realm.png",
+    "previews": [
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-414b2071-d17e-48a2-90b2-4d8699b1129b.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-c355a5ce-4e54-48b6-883c-3b3fb7a6644f.png",
+      "https://static.toss.im/appsintoss/7057/live-managed-v1-4d4f2cb2-5675-4f38-9cd5-64dd8443ad80.png"
+    ]
+  }
+]
